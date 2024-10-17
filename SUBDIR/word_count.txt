@@ -1,3 +1,0 @@
-Word: banana - Count: 2
-Word: apple - Count: 2
-Word: orange - Count: 1
