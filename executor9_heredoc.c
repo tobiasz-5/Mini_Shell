@@ -6,7 +6,7 @@
 /*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:45:55 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/17 03:33:57 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/10/17 14:02:28 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 void	handle_sigint_heredoc(int sig)
 {
+	// (void)sig;
 	g_received_signal = sig;
 }
 
@@ -69,7 +70,7 @@ void	handle_heredoc(const char *delimiter, int *heredoc_fd,
 	read_and_expand_heredoc(delimiter, pipefd, is_quoted, shell_state);
 	close(pipefd[1]);
 	restore_signal_handlers(&old_sa_int, &old_sa_quit);
-	if (g_received_signal == SIGINT)
+	if (g_received_signal != 0)
 	{
 		close(pipefd[0]);
 		*heredoc_fd = -1;

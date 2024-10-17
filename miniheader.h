@@ -6,7 +6,7 @@
 /*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:56:39 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/16 23:47:46 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/10/17 19:43:33 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ typedef struct s_expand_state
 	t_shell_state	*shell_state;
 }	t_expand_state;
 
+void	restore_signals_after_command(void);
 int				ft_isalnum(int c);
 int				ft_isdigit(int c);
 int				ft_isalpha(int c);
