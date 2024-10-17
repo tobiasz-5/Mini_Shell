@@ -1,0 +1,11 @@
+kjfile_count.txt
+ file_list.txt
+>
+ combined.txt
+ complete_list.txt
+ file_backup.txt
+ file_count.txt
+
+file_list.txt
+ out
+ word_count.txt

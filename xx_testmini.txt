@@ -1,0 +1,41 @@
+echo "-n"    OOOOO
+/bin/ls
+/bin/ls filethatdoesntexist
+echo $USER   "$USER"   '$USER'
+cd /home/tobiasz/SHELL980/SUBDIR
+pwd
+false
+echo $?
+ls
+l's
+p'w'd
+ls -l | wc | cat -e
+ls -m /home/tobiasz/SHELL980/SUBDIR | tr ',' '\n' | tee file_list.txt | wc -l > file_count.txt
+ls -m /home/tobiasz/SHELL980/SUBDIR | tr ',' '\n' | tee file_list.txt | wc -l
+cat < file_list.txt > combined.txt > complete_list.txt >> file_backup.txt
+false
+echo "My home directory is $HOME and last exit status is: $?"
+echo "$USER"
+echo "apple banana orange apple banana" | tr ' ' '\n' | sort | uniq -c | sort -nr | awk '{print "Word:", $2, "- Count:", $1}' | tee word_count.txt | grep "banana" | cat -n
+env
+export
+export myyyvar
+export abcd=
+export heyman=""
+export esportata=oxportata
+export _esportata4=_oxportata4
+export 3pato=3lato
+export "blu=gru"
+export
+env
+export orso=bue
+echo $orso
+unset orso
+echo $orso
+ffefhjdhejhrkurk
+ls | frjfekjfe
+> ">"
+>> out
+export ole
+echo $ole
+exit
