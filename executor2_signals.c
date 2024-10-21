@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor2_signals.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mabrigo <mabrigo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 23:42:51 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/17 19:45:20 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/10/21 10:05:29 by mabrigo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	handle_signals_in_child(void)
 
 void	restore_signals_after_command(void)
 {
-	struct sigaction sa_int;
-	struct sigaction sa_quit;
+	struct sigaction	sa_int;
+	struct sigaction	sa_quit;
 
 	// Ripristina la gestione normale di SIGINT
 	sa_int.sa_handler = handle_sigint;

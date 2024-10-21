@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   m_minishell.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mabrigo <mabrigo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:46:29 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/08 11:53:06 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/10/20 15:36:19 by mabrigo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	process_input(char *input, t_shell_state *shell_state)
 
 	tokens = NULL;
 	command_list = NULL;
-	add_history(input);
+	//add_history(input); //risolve la doppia cronologia di ogni comando
 	if (is_only_white_spaces(input))
 		return ;
 	tokens = lexer(input, shell_state);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer2_process.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mabrigo <mabrigo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:46:16 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/14 16:24:05 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/10/20 15:45:06 by mabrigo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,10 @@ int	prcs_nxt_tkn(char *input, t_token_list *token_list,
 		if (token_list->state->token_str == NULL
 			&& !*(token_list->head) && input[token_list->i] == '>')
 		{
-			add_token_to_list(token_list, "/bin/true");
+			if (input[token_list->i] == '>')
+				add_token_to_list(token_list, "/bin/true");
+			else if (input[token_list->i] == '<' && input[token_list->i + 1] == '<')
+				add_token_to_list(token_list, "/bin/cat");
 		}
 		return (prcs_tokn(input, token_list, shell_state));
 	}
