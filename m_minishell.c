@@ -6,7 +6,7 @@
 /*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:46:29 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/08 11:53:06 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:38:56 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	process_input(char *input, t_shell_state *shell_state)
 
 	tokens = NULL;
 	command_list = NULL;
-	add_history(input);
+	// add_history(input);
 	if (is_only_white_spaces(input))
 		return ;
 	tokens = lexer(input, shell_state);

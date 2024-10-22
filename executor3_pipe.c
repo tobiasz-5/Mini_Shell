@@ -6,7 +6,7 @@
 /*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:45:43 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/17 19:08:37 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:39:38 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	finalize_pipeline(int prev_pipe_fd[2], t_shell_state *shell_state)
 {
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, handle_sigquit);
 	if (prev_pipe_fd[0] != -1)
 		close_prev_pipe_fd(prev_pipe_fd);
 	wait_for_all_children(shell_state);
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, handle_sigquit);
 }
 
 void	handle_child_process(t_command *current_cmd, int prev_pipe_fd[2],
