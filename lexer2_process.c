@@ -88,9 +88,16 @@ int	prcs_nxt_tkn(char *input, t_token_list *token_list,
 	if (is_operator(input[token_list->i]))
 	{
 		if (token_list->state->token_str == NULL
-			&& !*(token_list->head) && input[token_list->i] == '>')
+			&& !*(token_list->head))
 		{
-			add_token_to_list(token_list, "/bin/true");
+			if (input[token_list->i] == '>')
+			{
+				add_token_to_list(token_list, "/bin/true");
+			}
+			else if (input[token_list->i] == '<' && input[token_list->i + 1] == '<')
+			{
+				add_token_to_list(token_list, "/bin/cat");
+			}
 		}
 		return (prcs_tokn(input, token_list, shell_state));
 	}
