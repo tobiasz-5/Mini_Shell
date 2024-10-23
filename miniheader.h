@@ -163,6 +163,7 @@ void			restore_signals_after_command(void);
 int				ft_isalnum(int c);
 int				ft_isdigit(int c);
 int				ft_isalpha(int c);
+char			*ft_strnstr(const char *big, const char *little, size_t len);
 void			init_env_list(t_shell_state *shell_state);
 void			execute_external_command(t_command *command,
 					char **args_array, t_shell_state *shell_state);
