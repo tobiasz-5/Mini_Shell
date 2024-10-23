@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer7_node_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:46:24 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/14 16:15:07 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:13:00 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ void	add_token_to_list(t_token_list *token_list, char *token_str)
 {
 	t_token_node	*new_node;
 
-	new_node = create_token_node(token_str,
-			token_list->state->single_quote,
+	new_node = create_token_node(token_str, token_list->state->single_quote, \
 			token_list->state->double_quote);
 	if (new_node)
 		add_token_node(token_list, new_node);

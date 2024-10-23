@@ -19,7 +19,7 @@ SRCS = 	a_libft.c a_libft2.c a_libft3.c a_libft4.c a_split.c builtin.c builtin2.
 		executor6_redir_builtin_utils.c executor7_redir_child.c executor8_redir_child_utils.c executor9_heredoc.c \
 		executor10_heredoc_expansion.c get_cmd_path.c executor11_read_write_heredoc.c \
 		executor12_read_and_expand_utils.c expander.c expander2_utils.c expander3.c expander4.c expander5_utils.c \
-		free.c free2.c lexer.c lexer2_process.c lexer3_special_process.c lexer4_handle_token.c lexer4_handle_operator.c \
+		free.c free2.c lexer.c lexer2_process.c lexer2_utils.c lexer3_special_process.c lexer4_handle_token.c lexer4_handle_operator.c \
 		lexer5_handle_token_utils.c lexer6_create_token.c lexer7_node_utils.c lexer8_gen_utils.c \
 		m_main.c m_minishell.c parser.c parser2_args_and_redir.c parser3_args_and_redir_utils.c \
 		parser4_redir_and_dollar.c parser5_arg_list_to_array.c signals.c token.c

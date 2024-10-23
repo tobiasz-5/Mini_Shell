@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniheader.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:56:39 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/17 19:43:33 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/10/23 16:34:55 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ typedef struct s_expand_state
 	t_shell_state	*shell_state;
 }	t_expand_state;
 
-void	restore_signals_after_command(void);
+void			restore_signals_after_command(void);
 int				ft_isalnum(int c);
 int				ft_isdigit(int c);
 int				ft_isalpha(int c);
@@ -258,6 +258,8 @@ int				add_argument(t_command *command, char *arg_value,
 					bool single_quote, bool double_quote);
 int				parse_redirection(t_parser_state *state, t_command *command);
 int				is_only_white_spaces(char *input);
+char			*pipepipe(char *s);
+int				readloop(char *delimiter);
 int				prcs_nxt_tkn(char *input, t_token_list *token_list,
 					t_shell_state *shell_state);
 int				handle_dollar_token(char *input, t_token_list *token_list,

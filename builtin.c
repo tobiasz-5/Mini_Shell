@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:45:20 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/16 18:58:19 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/10/23 12:44:41 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,7 @@
 void	execute_cd(char **args_array, t_shell_state *shell_state)
 {
 	if (args_array[1] == NULL)
-	{
-		printf("cd: missing argument\n");
-		shell_state->last_exit_status = 1;
-	}
+		return ;
 	else if (args_array[2] != NULL)
 	{
 		printf("bash: cd: too many arguments\n");
@@ -32,9 +29,7 @@ void	execute_cd(char **args_array, t_shell_state *shell_state)
 			shell_state->last_exit_status = 1;
 		}
 		else
-		{
 			shell_state->last_exit_status = 0;
-		}
 	}
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   m_minishell.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:46:29 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/08 11:53:06 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/10/23 14:52:26 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ void	process_input(char *input, t_shell_state *shell_state)
 		free_token_list(tokens);
 		return ;
 	}
-	execute_commands(command_list, shell_state);
+	if (!(input[0] == '<' && input[1] == '<'))
+		execute_commands(command_list, shell_state);
 	free_command_list(command_list);
 	free_token_list(tokens);
 }

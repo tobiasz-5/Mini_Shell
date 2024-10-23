@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer2_process.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:46:16 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/14 16:24:05 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/10/23 17:36:20 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,20 @@ int	prcs_tokn(char *input, t_token_list *token_list, t_shell_state *shell_state)
 int	prcs_nxt_tkn(char *input, t_token_list *token_list,
 			t_shell_state *shell_state)
 {
-	if (is_operator(input[token_list->i]))
+	if (input[token_list->i] == '<' && input[token_list->i + 1] == '<')
+	{
+		token_list->i += 2;
+		if (isspace(token_list->i))
+			token_list->i++; // Avanza oltre '<<'
+		readloop(&input[token_list->i]);
+	}
+	else if (is_operator(input[token_list->i]))
 	{
 		if (token_list->state->token_str == NULL
-			&& !*(token_list->head) && input[token_list->i] == '>')
+			&& !*(token_list->head))
 		{
-			add_token_to_list(token_list, "/bin/true");
+			if (input[token_list->i] == '>')
+				add_token_to_list(token_list, "/bin/true");
 		}
 		return (prcs_tokn(input, token_list, shell_state));
 	}
