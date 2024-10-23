@@ -6,7 +6,7 @@
 /*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 16:32:34 by negambar          #+#    #+#             */
-/*   Updated: 2024/10/23 18:06:00 by negambar         ###   ########.fr       */
+/*   Updated: 2024/10/23 18:34:40 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ char	*ft_strtrim(char *s)
 	cpy = (char *)malloc(strlen(s) + 1);
 	if (!cpy)
 		return (NULL);
-	while (s[i] == ' ' || s[i] == '\t')
-		i++;
 	while (s[i])
 	{
+		if (s[i] == ' ')
+			i++;
 		cpy[j] = s[i];
 		i++;
 		j++;
@@ -39,17 +39,14 @@ char	*pipepipe(char *s)
 	int		i;
 
 	i = 0;
+	s = ft_strtrim(s);
 	while (s[i])
 	{
-		printf("%c\n", s[i]);
-		if (s[i] == ' ')
-			i++;
-		if (s[i+1] == '<' && s[i+2] == '<')
+		if (s[i] == '<' && s[i + 1] == '<')
 		{
-			i++;
 			break ;
 		}
-		if ((s[i] == '|' || s[i + 1] == '|'))
+		if (s[i] == '|' )
 			break ;
 		i++;
 	}
@@ -61,10 +58,7 @@ int	readloop(char *delimiter)
 {
 	char	*line;
 
-	printf("%s\n", delimiter);
 	delimiter = pipepipe(delimiter);
-	delimiter = ft_strtrim(delimiter);
-	printf("%s\n", delimiter);
 	line = readline("> ");
 	while (line && strcmp(line, delimiter) != 0)
 	{

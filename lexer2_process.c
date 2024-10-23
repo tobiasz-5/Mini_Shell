@@ -6,7 +6,7 @@
 /*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:46:16 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/23 17:36:20 by negambar         ###   ########.fr       */
+/*   Updated: 2024/10/23 18:38:09 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ int	prcs_nxt_tkn(char *input, t_token_list *token_list,
 	{
 		token_list->i += 2;
 		if (isspace(token_list->i))
-			token_list->i++; // Avanza oltre '<<'
-		readloop(&input[token_list->i]);
+			token_list->i++;
+		return(readloop(&input[token_list->i]));
 	}
 	else if (is_operator(input[token_list->i]))
 	{
