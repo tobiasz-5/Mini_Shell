@@ -6,7 +6,7 @@
 /*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 16:32:34 by negambar          #+#    #+#             */
-/*   Updated: 2024/10/23 18:34:40 by negambar         ###   ########.fr       */
+/*   Updated: 2024/10/24 17:36:13 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,7 @@ char	*ft_strtrim(char *s)
 	{
 		if (s[i] == ' ')
 			i++;
-		cpy[j] = s[i];
-		i++;
-		j++;
+		cpy[j++] = s[i++];
 	}
 	cpy[j] = '\0';
 	return (cpy);
@@ -60,6 +58,7 @@ int	readloop(char *delimiter)
 
 	delimiter = pipepipe(delimiter);
 	line = readline("> ");
+	printf("delimiter: %s\n", delimiter);
 	while (line && strcmp(line, delimiter) != 0)
 	{
 		if (!line || strcmp(line, delimiter) == 0)
