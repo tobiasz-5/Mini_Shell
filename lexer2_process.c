@@ -90,7 +90,7 @@ int	prcs_nxt_tkn(char *input, t_token_list *token_list,
 		token_list->i += 2;
 		if (isspace(token_list->i))
 			token_list->i++;
-		return(readloop(&input[token_list->i]));
+		readloop(&input[token_list->i]);
 	}
 	else if (is_operator(input[token_list->i]))
 	{
