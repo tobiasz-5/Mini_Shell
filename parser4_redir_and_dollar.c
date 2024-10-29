@@ -6,7 +6,7 @@
 /*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:46:49 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/15 20:08:02 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/10/25 15:14:47 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,17 @@ int	parse_redirection(t_parser_state *state, t_command *command)
 		redirection->filename = ft_strdup(state->current_token->token);
 		redirection->is_quoted = state->current_token->single_quote
 			|| state->current_token->double_quote;
+		if (!redirection->filename)
+		{
+			fprintf(stderr, "Error: redirection filename is NULL\n");
+			free(redirection);
+			return (0);
+		}
 		state->current_token = state->current_token->next;
 	}
 	else
 	{
+		fprintf(stderr, "Syntax error: expected filename after redirection\n");
 		free(redirection);
 		return (0);
 	}

@@ -6,13 +6,14 @@
 /*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:46:41 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/14 12:48:36 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/10/29 18:39:46 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniheader.h"
 
-t_command	*parse_command(t_parser_state *state, t_shell_state *shell_state)
+t_command	*parse_command(t_parser_state *state,
+			t_shell_state *shell_state)
 {
 	t_command	*command;
 
@@ -21,12 +22,22 @@ t_command	*parse_command(t_parser_state *state, t_shell_state *shell_state)
 		return (init_vars_for_not_cmd(state), NULL);
 	ft_memset(command, 0, sizeof(t_command));
 	init_vars_for_parsing_command(command);
-	if (state->current_token && state->current_token->type == TOKEN_WORD)
+	if (state->current_token && (state->current_token->type == TOKEN_WORD
+			|| is_redirection_token(state->current_token->type)))
 	{
-		command->cmd_name = ft_strdup(state->current_token->token);
-		if (!command->cmd_name)
-			return (init_vars_for_cmdname_error(state, command), NULL);
-		state->current_token = state->current_token->next;
+		if (state->current_token->type == TOKEN_WORD)
+		{
+			command->cmd_name = ft_strdup(state->current_token->token);
+			if (!command->cmd_name)
+				return (init_vars_for_cmdname_error(state, command), NULL);
+			state->current_token = state->current_token->next;
+		}
+		else
+		{
+			command->cmd_name = ft_strdup("/bin/true");
+			if (!command->cmd_name)
+				return (init_vars_for_cmdname_error(state, command), NULL);
+		}
 	}
 	else
 		return (init_vars_for_expctd_cmdname(state, command), NULL);

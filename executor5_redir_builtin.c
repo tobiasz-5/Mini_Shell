@@ -6,7 +6,7 @@
 /*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:45:47 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/15 13:53:31 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/10/29 11:58:45 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,24 +91,37 @@ int	redirect_output(t_redirection *redirection, t_io_fds *fds)
 }
 
 int	handle_heredoc_redirection(t_redirection *redirection, t_io_fds *fds,
-					t_shell_state *shell_state)
+			t_shell_state *shell_state)
 {
+	char	*heredoc_filename;
+	int		heredoc_fd;
+
+	heredoc_filename = NULL;
 	if (backup_fd(STDIN_FILENO, &fds->stdin_backup,
 			"Error backing up stdin for heredoc") < 0)
 		return (-1);
-	handle_heredoc(redirection->filename, &fds->heredoc_fd,
-		redirection->is_quoted, shell_state);
-	if (fds->heredoc_fd < 0)
+	handle_heredoc(redirection, &heredoc_filename, shell_state);
+	if (heredoc_filename == NULL)
 	{
-		write(2, "Exited with Signal\n", 19);
+		write(2, "Error handling heredoc\n", 23);
 		return (-1);
 	}
-	if (dup2(fds->heredoc_fd, STDIN_FILENO) < 0)
+	heredoc_fd = open(heredoc_filename, O_RDONLY);
+	if (heredoc_fd < 0)
+	{
+		perror("Error opening heredoc file");
+		free(heredoc_filename);
+		return (-1);
+	}
+	if (dup2(heredoc_fd, STDIN_FILENO) < 0)
 	{
 		perror("Error redirecting stdin for heredoc");
-		close(fds->heredoc_fd);
+		close(heredoc_fd);
+		free(heredoc_filename);
 		return (-1);
 	}
-	close(fds->heredoc_fd);
+	close(heredoc_fd);
+	unlink(heredoc_filename);
+	free(heredoc_filename);
 	return (0);
 }

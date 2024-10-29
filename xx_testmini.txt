@@ -2,7 +2,7 @@ echo "-n"    OOOOO
 /bin/ls
 /bin/ls filethatdoesntexist
 echo $USER   "$USER"   '$USER'
-cd /home/tobiasz/SHELL980/SUBDIR
+cd /home/tobiasz/MM5verynice/SUBDIR
 pwd
 false
 echo $?
@@ -10,8 +10,8 @@ ls
 l's
 p'w'd
 ls -l | wc | cat -e
-ls -m /home/tobiasz/SHELL980/SUBDIR | tr ',' '\n' | tee file_list.txt | wc -l > file_count.txt
-ls -m /home/tobiasz/SHELL980/SUBDIR | tr ',' '\n' | tee file_list.txt | wc -l
+ls -m /home/tobiasz/MM5verynice/SUBDIR | tr ',' '\n' | tee file_list.txt | wc -l > file_count.txt
+ls -m /home/tobiasz/MM5verynice/SUBDIR | tr ',' '\n' | tee file_list.txt | wc -l
 cat < file_list.txt > combined.txt > complete_list.txt >> file_backup.txt
 false
 echo "My home directory is $HOME and last exit status is: $?"

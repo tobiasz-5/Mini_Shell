@@ -6,7 +6,7 @@
 /*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 23:42:51 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/17 19:45:20 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/10/29 11:56:59 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,13 @@ void	handle_signals_in_child(void)
 
 void	restore_signals_after_command(void)
 {
-	struct sigaction sa_int;
-	struct sigaction sa_quit;
+	struct sigaction	sa_int;
+	struct sigaction	sa_quit;
 
-	// Ripristina la gestione normale di SIGINT
 	sa_int.sa_handler = handle_sigint;
 	sigemptyset(&sa_int.sa_mask);
 	sa_int.sa_flags = 0;
 	sigaction(SIGINT, &sa_int, NULL);
-
-	// Ripristina la gestione normale di SIGQUIT
 	sa_quit.sa_handler = handle_sigquit;
 	sigemptyset(&sa_quit.sa_mask);
 	sa_quit.sa_flags = 0;

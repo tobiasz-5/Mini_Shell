@@ -6,7 +6,7 @@
 /*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:46:29 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/22 13:38:56 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/10/29 18:28:04 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ void	execute_commands(t_command *command_list, t_shell_state *shell_state)
 {
 	if (!command_list)
 		return ;
+	if (process_all_heredocs(command_list, shell_state) != 0)
+	{
+		free_command_list(command_list);
+		return ;
+	}
 	if (command_list->next)
 		execute_pipeline(command_list, shell_state);
 	else
@@ -29,7 +34,6 @@ void	process_input(char *input, t_shell_state *shell_state)
 
 	tokens = NULL;
 	command_list = NULL;
-	// add_history(input);
 	if (is_only_white_spaces(input))
 		return ;
 	tokens = lexer(input, shell_state);

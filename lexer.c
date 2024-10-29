@@ -39,6 +39,8 @@ t_token_node	*lexer(char *input, t_shell_state *shell_state)
 	{
 		token_list.i = skip_spaces(input, token_list.i);
 		token_list.result = prcs_nxt_tkn(input, &token_list, shell_state);
+		printf("Lexer processing character: %c at position %d\n",
+			input[token_list.i], token_list.i);
 		if (token_list.result == -1)
 		{
 			if (head)

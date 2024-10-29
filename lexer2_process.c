@@ -6,7 +6,7 @@
 /*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:46:16 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/14 16:24:05 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/10/29 18:41:39 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,6 @@ int	prcs_nxt_tkn(char *input, t_token_list *token_list,
 			{
 				add_token_to_list(token_list, "/bin/true");
 			}
-			//else if (input[token_list->i] == '<' && input[token_list->i + 1] == '<')
-			//{
-			//	add_token_to_list(token_list, "/bin/cat");
-			//}
 		}
 		return (prcs_tokn(input, token_list, shell_state));
 	}

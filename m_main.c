@@ -79,7 +79,7 @@ void	shell_loop(char **envp)
 		process_input(input, &shell_state);
 		free(input);
 		restore_signals_after_command();
-		if (g_received_signal != 0)//questo forse e' inutile
+		if (g_received_signal != 0)
 		{
 			g_received_signal = 0;
 		}

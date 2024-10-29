@@ -6,7 +6,7 @@
 /*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:56:39 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/17 19:43:33 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/10/29 18:57:02 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ typedef struct s_token_list
 
 typedef struct s_redirection
 {
+	char					*heredoc_filename;
 	bool					is_quoted;
 	char					*filename;
 	t_token_type			type;
@@ -159,7 +160,9 @@ typedef struct s_expand_state
 	t_shell_state	*shell_state;
 }	t_expand_state;
 
-void	restore_signals_after_command(void);
+int				process_all_heredocs(t_command *command_list,
+					t_shell_state *shell_state);
+void			restore_signals_after_command(void);
 int				ft_isalnum(int c);
 int				ft_isdigit(int c);
 int				ft_isalpha(int c);
@@ -232,16 +235,12 @@ void			restore_standard_fds(t_io_fds *fds);
 void			free_args_array(char **args_array);
 void			handle_sigint(int sig);
 void			handle_sigquit(int sig);
-void			handle_heredoc(const char *delimiter, int *heredoc_fd,
-					bool is_quoted, t_shell_state *shell_state);
 void			handle_child_redirections(t_command *command,
 					t_io_fds *fds, t_shell_state *shell_state);
 void			unset_env_var(t_env_var **env_list, const char *name);
 void			builtin_env(t_shell_state *shell_state);
 void			execute_single_command(t_command *command,
 					t_shell_state *shell_state);
-// void			execute_pipeline(t_command *commands,
-// 					t_shell_state *shell_state);
 void			handle_export_command(t_env_var **env_list,
 					const char *input, bool double_quote, bool single_quote);
 void			execute_builtin(t_command *command, char **args_array,
@@ -274,6 +273,8 @@ int				get_variable_value_length(const char *var_name,
 int				hndl_out_redir(t_redirection *redirection,
 					int flags);
 int				handle_input_redirection(t_redirection *redirection);
+void			handle_heredoc(t_redirection *redirection,
+					char **heredoc_filename, t_shell_state *shell_state);
 int				backup_fd(int old_fd, int *backup_fd, const char *error_msg);
 int				handle_heredoc_redirection2(t_redirection *redirection,
 					t_io_fds *fds, t_shell_state *shell_state);
@@ -334,11 +335,11 @@ void			add_char_to_line(char buffer_char, char *line,
 					size_t *line_len);
 bool			is_newline_char(char buffer_char);
 ssize_t			read_single_char(char *buffer);
-void			read_and_expand_heredoc(const char *delimiter,
-					int pipefd[2], bool is_quoted, t_shell_state *shell_state);
+void			read_and_expand_heredoc(const char *delimiter, int fd,
+					bool is_quoted, t_shell_state *shell_state);
 bool			read_input_line(char *line, size_t *line_len);
 bool			handle_read_error(ssize_t bytes_read);
-void			expand_and_write_line(const char *line, int pipefd[2],
+void			expand_and_write_line(const char *line, int fd,
 					bool is_quoted, t_shell_state *shell_state);
 bool			is_valid_var_name(const char *name);
 void			setup_child_prcs(t_command *current_cmd, int prev_pipe_fd[2],
