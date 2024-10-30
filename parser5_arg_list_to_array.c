@@ -6,7 +6,7 @@
 /*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:46:51 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/10 17:55:52 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/10/30 12:11:23 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,24 +37,13 @@ int	check_and_free_memory(char **args_array, bool *args_quote_flags, int count)
 	return (1);
 }
 
-char	**convert_arglist_for_exc(t_command *command,
-				bool **args_quote_flags_ptr)
+bool	populate_args_arrays(t_list_args *args_list,
+				char **args_array, bool *args_quote_flags)
 {
 	t_list_args	*arg;
-	char		**args_array;
-	bool		*args_quote_flags;
 	int			i;
-	int			count;
 
-	count = count_arguments(command->args_list);
-	args_array = malloc(sizeof(char *) * (count + 1));
-	if (count > 0)
-		args_quote_flags = malloc(sizeof(bool) * count);
-	else
-		args_quote_flags = NULL;
-	if (!check_and_free_memory(args_array, args_quote_flags, count))
-		return (NULL);
-	arg = command->args_list;
+	arg = args_list;
 	i = 0;
 	while (arg)
 	{
@@ -66,15 +55,38 @@ char	**convert_arglist_for_exc(t_command *command,
 				i--;
 				free(args_array[i]);
 			}
-			free(args_array);
-			free(args_quote_flags);
-			return (NULL);
+			return (false);
 		}
 		args_quote_flags[i] = arg->single_quote || arg->double_quote;
 		arg = arg->next;
 		i++;
 	}
-	args_array[i] = NULL;
+	return (true);
+}
+
+char	**convert_arglist_for_exc(t_command *command,
+				bool **args_quote_flags_ptr)
+{
+	char		**args_array;
+	bool		*args_quote_flags;
+	int			count;
+
+	count = count_arguments(command->args_list);
+	args_array = malloc(sizeof(char *) * (count + 1));
+	if (count > 0)
+		args_quote_flags = malloc(sizeof(bool) * count);
+	else
+		args_quote_flags = NULL;
+	if (!check_and_free_memory(args_array, args_quote_flags, count))
+		return (NULL);
+	if (!populate_args_arrays(command->args_list,
+			args_array, args_quote_flags))
+	{
+		free(args_array);
+		free(args_quote_flags);
+		return (NULL);
+	}
+	args_array[count] = NULL;
 	*args_quote_flags_ptr = args_quote_flags;
 	return (args_array);
 }

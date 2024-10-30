@@ -6,13 +6,14 @@
 /*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:45:40 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/29 12:19:18 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/10/30 18:44:47 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniheader.h"
 
 #define MAX_LINE_LENGTH 4096
+#define MAX_ATTEMPTS 100
 
 int	prepare_arguments(t_command *command, char ***args_array,
 				bool **args_quote_flags)
@@ -111,11 +112,32 @@ void	handle_sigint_heredoc(int sig)
 	g_received_signal = sig;
 }
 
-void	read_and_expand_heredoc(const char *delimiter, int fd, bool is_quoted, t_shell_state *shell_state)
+void	heredoc_input_loop(const char	*delimiter, int fd,
+			bool is_quoted, t_shell_state *shell_state)
 {
-	char				line[MAX_LINE_LENGTH];
-	size_t				line_len;
-	bool				should_exit;
+	char	line[MAX_LINE_LENGTH];
+	size_t	line_len;
+	bool	should_exit;
+
+	should_exit = false;
+	while (1)
+	{
+		write(1, "> ", 2);
+		should_exit = read_input_line(line, &line_len);
+		if (should_exit || g_received_signal == SIGINT)
+		{
+			write(1, "\n", 1);
+			break ;
+		}
+		if (strcmp(line, delimiter) == 0)
+			break ;
+		expand_and_write_line(line, fd, is_quoted, shell_state);
+	}
+}
+
+void	read_and_expand_heredoc(const char *delimiter, int fd,
+				bool is_quoted, t_shell_state *shell_state)
+{
 	struct sigaction	sa_int;
 	struct sigaction	sa_quit;
 	struct sigaction	sa_old_int;
@@ -129,70 +151,141 @@ void	read_and_expand_heredoc(const char *delimiter, int fd, bool is_quoted, t_sh
 	sigemptyset(&sa_quit.sa_mask);
 	sa_quit.sa_flags = 0;
 	sigaction(SIGQUIT, &sa_quit, &sa_old_quit);
-	should_exit = false;
-	while (1)
-	{
-		write(STDOUT_FILENO, "> ", 2);
-		should_exit = read_input_line(line, &line_len);
-		if (should_exit || g_received_signal == SIGINT)
-		{
-			write(STDOUT_FILENO, "\n", 1);
-			break ;
-		}
-		if (strcmp(line, delimiter) == 0)
-			break ;
-		expand_and_write_line(line, fd, is_quoted, shell_state);
-	}
+	heredoc_input_loop(delimiter, fd, is_quoted, shell_state);
 	sigaction(SIGINT, &sa_old_int, NULL);
 	sigaction(SIGQUIT, &sa_old_quit, NULL);
 }
 
-void	handle_heredoc(t_redirection *redirection, char **heredoc_filename, t_shell_state *shell_state)
+void	init_int_to_str_vars(t_int_to_str_vars *vars, int num)
 {
-	char	tmp_filename[] = "/tmp/heredocXXXXXX";
-	int	fd = mkstemp(tmp_filename);
-
-	if (fd == -1)
+	vars->i = 0;
+	vars->is_negative = 0;
+	vars->temp_num = num;
+	if (num == 0)
 	{
-		perror("mkstemp");
-		*heredoc_filename = NULL;
+		vars->temp_str[vars->i++] = '0';
+		vars->temp_str[vars->i] = '\0';
+	}
+	else if (num < 0)
+	{
+		vars->is_negative = 1;
+		vars->temp_num = -num;
+	}
+}
+
+void	int_to_str(int num, char *str)
+{
+	t_int_to_str_vars	vars;
+
+	init_int_to_str_vars(&vars, num);
+	if (num == 0)
+	{
+		str[0] = vars.temp_str[0];
+		str[1] = '\0';
 		return ;
 	}
-	*heredoc_filename = ft_strdup(tmp_filename);
+	while (vars.temp_num > 0)
+	{
+		vars.temp_str[vars.i++] = (vars.temp_num % 10) + '0';
+		vars.temp_num /= 10;
+	}
+	if (vars.is_negative)
+		vars.temp_str[vars.i++] = '-';
+	vars.j = 0;
+	while (vars.i > 0)
+		str[vars.j++] = vars.temp_str[--vars.i];
+	str[vars.j] = '\0';
+}
+
+int	generate_unique_filename(t_filename_vars *vars)
+{
+	vars->unique_id = 0;
+	while (vars->unique_id < MAX_ATTEMPTS)
+	{
+		ft_strcpy(vars->tmp_filename, "/tmp/heredoc_");
+		int_to_str(vars->unique_id, vars->unique_id_str);
+		ft_strcat(vars->tmp_filename, vars->unique_id_str);
+		vars->fd = open(vars->tmp_filename, O_CREAT | O_EXCL | O_RDWR, 0600);
+		if (vars->fd != -1)
+			return (0);
+		if (errno != EEXIST)
+		{
+			perror("open");
+			return (-1);
+		}
+		vars->unique_id++;
+	}
+	write(2, "Failed to create unique heredoc file\n", 37);
+	return (-1);
+}
+
+int	create_temp_heredoc_file(char **heredoc_filename)
+{
+	t_filename_vars	vars;
+
+	if (generate_unique_filename(&vars) != 0)
+	{
+		*heredoc_filename = NULL;
+		return (-1);
+	}
+	*heredoc_filename = ft_strdup(vars.tmp_filename);
 	if (!*heredoc_filename)
 	{
 		perror("ft_strdup");
-		close(fd);
-		unlink(tmp_filename);
+		close(vars.fd);
+		unlink(vars.tmp_filename);
 		*heredoc_filename = NULL;
-		return ;
+		return (-1);
 	}
-	printf("handle_heredoc: heredoc_filename = %s\n", *heredoc_filename);
-	read_and_expand_heredoc(redirection->filename, fd, redirection->is_quoted, shell_state);
+	return (vars.fd);
+}
+
+void	handle_heredoc(t_redirection *redirection,
+			char **heredoc_filename, t_shell_state *shell_state)
+{
+	int	fd;
+
+	fd = create_temp_heredoc_file(heredoc_filename);
+	if (fd == -1)
+		return ;
+	read_and_expand_heredoc(redirection->filename, fd,
+		redirection->is_quoted, shell_state);
 	close(fd);
+}
+
+int	process_command_heredocs(t_command *current_cmd, t_shell_state *shell_state)
+{
+	t_redirection	*redirection;
+	char			*heredoc_filename;
+
+	redirection = current_cmd->redirections;
+	while (redirection)
+	{
+		if (redirection->type == TOKEN_HEREDOC)
+		{
+			heredoc_filename = NULL;
+			handle_heredoc(redirection, &heredoc_filename, shell_state);
+			if (!heredoc_filename)
+			{
+				write(2, "failed to create heredoc file 4 redir\n", 38);
+				return (-1);
+			}
+			redirection->heredoc_filename = heredoc_filename;
+		}
+		redirection = redirection->next;
+	}
+	return (0);
 }
 
 int	process_all_heredocs(t_command *command_list, t_shell_state *shell_state)
 {
-	t_command	*current_cmd = command_list;
+	t_command		*current_cmd;
+
+	current_cmd = command_list;
 	while (current_cmd)
 	{
-		t_redirection	*redirection = current_cmd->redirections;
-		while (redirection)
-		{
-			if (redirection->type == TOKEN_HEREDOC)
-			{
-				char	*heredoc_filename = NULL;
-				handle_heredoc(redirection, &heredoc_filename, shell_state);
-				if (!heredoc_filename)
-				{
-					fprintf(stderr, "Failed to create heredoc file for redirection\n");
-					return (-1);
-				}
-				redirection->heredoc_filename = heredoc_filename;
-			}
-			redirection = redirection->next;
-		}
+		if (process_command_heredocs(current_cmd, shell_state) < 0)
+			return (1);
 		current_cmd = current_cmd->next;
 	}
 	return (0);
@@ -200,10 +293,12 @@ int	process_all_heredocs(t_command *command_list, t_shell_state *shell_state)
 
 void	execute_single_command(t_command *command, t_shell_state *shell_state)
 {
-	char	**args_array;
-	bool	*args_quote_flags;
-	int		is_builtin_cmd;
+	char			**args_array;
+	bool			*args_quote_flags;
+	int				is_builtin_cmd;
+	t_redirection	*redirection;
 
+	redirection = command->redirections;
 	if (initialize_command_args(command, &args_array, &args_quote_flags) != 0)
 		return ;
 	is_builtin_cmd = is_builtin(command->cmd_name);
@@ -211,7 +306,6 @@ void	execute_single_command(t_command *command, t_shell_state *shell_state)
 		exec_bltn_in_parent(command, args_array, args_quote_flags, shell_state);
 	else
 		handle_fork(command, args_array, args_quote_flags, shell_state);
-	t_redirection	*redirection = command->redirections;
 	while (redirection)
 	{
 		if (redirection->type == TOKEN_HEREDOC)
@@ -220,7 +314,7 @@ void	execute_single_command(t_command *command, t_shell_state *shell_state)
 			free(redirection->heredoc_filename);
 			redirection->heredoc_filename = NULL;
 		}
-	redirection = redirection->next;
+		redirection = redirection->next;
 	}
 	free_args_array(args_array);
 	free(args_quote_flags);

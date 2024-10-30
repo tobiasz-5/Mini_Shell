@@ -6,7 +6,7 @@
 /*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:56:39 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/29 18:57:02 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/10/30 18:50:37 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,23 @@ typedef struct s_expand_state
 	char			*output;
 	t_shell_state	*shell_state;
 }	t_expand_state;
+
+typedef struct s_int_to_str_vars
+{
+	int		i;
+	int		temp_num;
+	char	temp_str[12];
+	int		is_negative;
+	int		j;
+}	t_int_to_str_vars;
+
+typedef struct s_filename_vars
+{
+	char	tmp_filename[PATH_MAX];
+	char	unique_id_str[12];
+	int		unique_id;
+	int		fd;
+}	t_filename_vars;
 
 int				process_all_heredocs(t_command *command_list,
 					t_shell_state *shell_state);

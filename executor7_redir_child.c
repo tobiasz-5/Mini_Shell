@@ -6,7 +6,7 @@
 /*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:45:51 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/29 12:06:45 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/10/30 15:06:12 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,12 @@ int	hndl_out_redir(t_redirection *redirection, int flags)
 	return (apply_dup2(fd, STDOUT_FILENO));
 }
 
-int	handle_heredoc_redirection2(t_redirection *redirection, t_io_fds *fds,
-			t_shell_state *shell_state)
+int	create_and_open_heredoc(t_redirection *redirection,
+		t_shell_state *shell_state, int *heredoc_fd, char **heredoc_filename)
 {
-	char	*heredoc_filename;
-	int		heredoc_fd;
-
-	heredoc_filename = NULL;
-	if (backup_fd(STDIN_FILENO, &fds->stdin_backup,
-			"Error backing up stdin for heredoc") < 0)
-		return (-1);
-	handle_heredoc(redirection, &heredoc_filename, shell_state);
-	if (heredoc_filename == NULL)
+	*heredoc_filename = NULL;
+	handle_heredoc(redirection, heredoc_filename, shell_state);
+	if (*heredoc_filename == NULL)
 	{
 		if (g_received_signal != 0)
 		{
@@ -56,13 +50,18 @@ int	handle_heredoc_redirection2(t_redirection *redirection, t_io_fds *fds,
 		}
 		return (-1);
 	}
-	heredoc_fd = open(heredoc_filename, O_RDONLY);
-	if (heredoc_fd < 0)
+	*heredoc_fd = open(*heredoc_filename, O_RDONLY);
+	if (*heredoc_fd < 0)
 	{
 		perror("Error opening heredoc file");
-		free(heredoc_filename);
+		free(*heredoc_filename);
 		return (-1);
 	}
+	return (0);
+}
+
+int	perform_heredoc_redirection2(int heredoc_fd, char *heredoc_filename)
+{
 	if (dup2(heredoc_fd, STDIN_FILENO) < 0)
 	{
 		perror("Error redirecting stdin for heredoc");
@@ -76,58 +75,25 @@ int	handle_heredoc_redirection2(t_redirection *redirection, t_io_fds *fds,
 	return (0);
 }
 
-void	handle_child_redirections(t_command *command, t_io_fds *fds, t_shell_state *shell_state)
+int	handle_heredoc_redirection2(t_redirection *redirection, t_io_fds *fds,
+			t_shell_state *shell_state)
 {
-	t_redirection	*redirection;
-	int				last_input_fd;
+	char	*heredoc_filename;
+	int		heredoc_fd;
 
-	redirection = command->redirections;
-	last_input_fd = -1;
-	while (redirection)
-	{
-		if (redirection->type == TOKEN_REDIR_IN || redirection->type == TOKEN_HEREDOC)
-		{
-			if (last_input_fd != -1)
-			{
-				close(last_input_fd);
-			}
-			if (redirection->type == TOKEN_REDIR_IN)
-			{
-				last_input_fd = open(redirection->filename, O_RDONLY);
-				if (last_input_fd < 0)
-				{
-					perror("Error opening input file");
-					exit(EXIT_FAILURE);
-				}
-			}
-			else if (redirection->type == TOKEN_HEREDOC)
-			{
-				if (redirection->heredoc_filename == NULL)
-				{
-					fprintf(stderr, "Error: heredoc_filename is NULL in handle_child_redirections\n");
-					exit(EXIT_FAILURE);
-				}
-				else
-				{
-					printf("handle_child_redirections: heredoc_filename = %s\n", redirection->heredoc_filename);
-				}
-				last_input_fd = open(redirection->heredoc_filename, O_RDONLY);
-				if (last_input_fd < 0)
-				{
-					perror("Error opening heredoc file");
-					exit(EXIT_FAILURE);
-				}
-			}
-		}
-		else if (redirection->type == TOKEN_REDIR_OUT || redirection->type == TOKEN_REDIR_APPEND)
-		{
-			if (apply_redirection(redirection, fds, shell_state) < 0)
-			{
-				exit(EXIT_FAILURE);
-			}
-		}
-		redirection = redirection->next;
-	}
+	if (backup_fd(STDIN_FILENO, &fds->stdin_backup,
+			"Error backing up stdin for heredoc") < 0)
+		return (-1);
+	if (create_and_open_heredoc(redirection, shell_state,
+			&heredoc_fd, &heredoc_filename) < 0)
+		return (-1);
+	if (perform_heredoc_redirection2(heredoc_fd, heredoc_filename) < 0)
+		return (-1);
+	return (0);
+}
+
+void	finalize_input_redirection(int last_input_fd)
+{
 	if (last_input_fd != -1)
 	{
 		if (dup2(last_input_fd, STDIN_FILENO) < 0)
@@ -137,4 +103,77 @@ void	handle_child_redirections(t_command *command, t_io_fds *fds, t_shell_state 
 		}
 		close(last_input_fd);
 	}
+}
+
+int	open_input_file(const char *filename)
+{
+	int	fd;
+
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+	{
+		perror("Error opening input file");
+		exit(EXIT_FAILURE);
+	}
+	return (fd);
+}
+
+void	process_input_redirection(t_redirection *redirection,
+			int *last_input_fd)
+{
+	const char	*filename;
+
+	filename = NULL;
+	if (*last_input_fd != -1)
+		close(*last_input_fd);
+	if (redirection->type == TOKEN_REDIR_IN)
+		filename = redirection->filename;
+	else if (redirection->type == TOKEN_HEREDOC)
+	{
+		if (redirection->heredoc_filename == NULL)
+		{
+			write(2, "Errorheoc_filme NULL hdle_child_redions\n", 41);
+			exit(EXIT_FAILURE);
+		}
+		else
+			printf("he_chilfe = %s\n", redirection->heredoc_filename);
+		filename = redirection->heredoc_filename;
+	}
+	else
+		return ;
+	*last_input_fd = open_input_file(filename);
+}
+
+void	process_redirection(t_redirection *redirection,
+			int *last_input_fd, t_io_fds *fds, t_shell_state *shell_state)
+{
+	if (redirection->type == TOKEN_REDIR_IN
+		|| redirection->type == TOKEN_HEREDOC)
+	{
+		process_input_redirection(redirection, last_input_fd);
+	}
+	else if (redirection->type == TOKEN_REDIR_OUT
+		|| redirection->type == TOKEN_REDIR_APPEND)
+	{
+		if (apply_redirection(redirection, fds, shell_state) < 0)
+		{
+			exit(EXIT_FAILURE);
+		}
+	}
+}
+
+void	handle_child_redirections(t_command *command,
+			t_io_fds *fds, t_shell_state *shell_state)
+{
+	t_redirection	*redirection;
+	int				last_input_fd;
+
+	redirection = command->redirections;
+	last_input_fd = -1;
+	while (redirection)
+	{
+		process_redirection(redirection, &last_input_fd, fds, shell_state);
+		redirection = redirection->next;
+	}
+	finalize_input_redirection(last_input_fd);
 }

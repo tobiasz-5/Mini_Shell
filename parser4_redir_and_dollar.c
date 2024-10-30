@@ -6,7 +6,7 @@
 /*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:46:49 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/25 15:14:47 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/10/30 16:58:33 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	add_redirection_to_command(t_redirection *redirection, t_command *command)
 	return (1);
 }
 
-int	parse_redirection(t_parser_state *state, t_command *command)
+t_redirection	*create_redirection(t_parser_state *state)
 {
 	t_redirection	*redirection;
 
@@ -67,22 +67,35 @@ int	parse_redirection(t_parser_state *state, t_command *command)
 	ft_memset(redirection, 0, sizeof(t_redirection));
 	redirection->type = state->current_token->type;
 	state->current_token = state->current_token->next;
+	return (redirection);
+}
+
+int	parse_redirection_filename(t_parser_state *state,
+			t_redirection *redirection)
+{
 	if (state->current_token && state->current_token->type == TOKEN_WORD)
 	{
 		redirection->filename = ft_strdup(state->current_token->token);
 		redirection->is_quoted = state->current_token->single_quote
 			|| state->current_token->double_quote;
 		if (!redirection->filename)
-		{
-			fprintf(stderr, "Error: redirection filename is NULL\n");
-			free(redirection);
 			return (0);
-		}
 		state->current_token = state->current_token->next;
+		return (1);
 	}
 	else
+		return (0);
+}
+
+int	parse_redirection(t_parser_state *state, t_command *command)
+{
+	t_redirection	*redirection;
+
+	redirection = create_redirection(state);
+	if (!redirection)
+		return (0);
+	if (!parse_redirection_filename(state, redirection))
 	{
-		fprintf(stderr, "Syntax error: expected filename after redirection\n");
 		free(redirection);
 		return (0);
 	}

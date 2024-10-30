@@ -6,7 +6,7 @@
 /*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:45:47 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/29 11:58:45 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/10/30 11:31:49 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,31 @@ int	redirect_output(t_redirection *redirection, t_io_fds *fds)
 	return (0);
 }
 
+int	perform_heredoc_redirection(const char *heredoc_filename)
+{
+	int	heredoc_fd;
+
+	heredoc_fd = open(heredoc_filename, O_RDONLY);
+	if (heredoc_fd < 0)
+	{
+		perror ("error opening heredoc file");
+		return (-1);
+	}
+	if (dup2(heredoc_fd, STDIN_FILENO) < 0)
+	{
+		perror("error redirecting stdin for heredoc");
+		close(heredoc_fd);
+		return (-1);
+	}
+	close (heredoc_fd);
+	unlink(heredoc_filename);
+	return (0);
+}
+
 int	handle_heredoc_redirection(t_redirection *redirection, t_io_fds *fds,
 			t_shell_state *shell_state)
 {
 	char	*heredoc_filename;
-	int		heredoc_fd;
 
 	heredoc_filename = NULL;
 	if (backup_fd(STDIN_FILENO, &fds->stdin_backup,
@@ -106,22 +126,11 @@ int	handle_heredoc_redirection(t_redirection *redirection, t_io_fds *fds,
 		write(2, "Error handling heredoc\n", 23);
 		return (-1);
 	}
-	heredoc_fd = open(heredoc_filename, O_RDONLY);
-	if (heredoc_fd < 0)
+	if (perform_heredoc_redirection(heredoc_filename) < 0)
 	{
-		perror("Error opening heredoc file");
 		free(heredoc_filename);
 		return (-1);
 	}
-	if (dup2(heredoc_fd, STDIN_FILENO) < 0)
-	{
-		perror("Error redirecting stdin for heredoc");
-		close(heredoc_fd);
-		free(heredoc_filename);
-		return (-1);
-	}
-	close(heredoc_fd);
-	unlink(heredoc_filename);
 	free(heredoc_filename);
 	return (0);
 }

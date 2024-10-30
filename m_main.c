@@ -54,18 +54,11 @@ void	clean_shell_state(t_shell_state *shell_state)
 	}
 }
 
-void	shell_loop(char **envp)
+void	shell_main_loop(t_shell_state *shell_state)
 {
-	char			*input;
-	t_shell_state	shell_state;
+	char	*input;
 
-	shell_state.last_exit_status = 0;
-	shell_state.env_list = NULL;
-	shell_state.envp = envp;
-	shell_state.exit_shell = false;
-	shell_state.exit_code = 0;
-	init_env_list(&shell_state);
-	while (!shell_state.exit_shell)
+	while (!shell_state->exit_shell)
 	{
 		input = readline(COLOR_BLUE"MINIPROMPT$ "COLOR_RESET);
 		if (!input)
@@ -76,16 +69,31 @@ void	shell_loop(char **envp)
 			continue ;
 		}
 		add_history(input);
-		process_input(input, &shell_state);
+		process_input(input, shell_state);
 		free(input);
 		restore_signals_after_command();
 		if (g_received_signal != 0)
 		{
 			g_received_signal = 0;
 		}
-		if (shell_state.exit_shell)
+		if (shell_state->exit_shell)
 			break ;
 	}
+}
+
+void	shell_loop(char **envp)
+{
+	char			*input;
+	t_shell_state	shell_state;
+
+	(void)input;
+	shell_state.last_exit_status = 0;
+	shell_state.env_list = NULL;
+	shell_state.envp = envp;
+	shell_state.exit_shell = false;
+	shell_state.exit_code = 0;
+	init_env_list(&shell_state);
+	shell_main_loop(&shell_state);
 	rl_clear_history();
 	clean_shell_state(&shell_state);
 	exit(shell_state.exit_code);
