@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:46:41 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/30 12:27:53 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/11/02 15:36:28 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniheader.h"
+
+static t_parser_state check_for_pipe(t_parser_state state, t_shell_state *shell_state)
+{
+	if (state.current_token && state.current_token->type == TOKEN_PIPE && state.current_token->next)
+		state.current_token = state.current_token->next;
+	else
+		shell_state->last_exit_status = 130;
+	return (state);
+}
+
 
 bool	set_command_name(t_parser_state *state, t_command *command)
 {
@@ -84,8 +94,7 @@ t_command	*parse_tokens(t_token_node *tokens, t_shell_state *shell_state)
 		else
 			last_command->next = command;
 		last_command = command;
-		if (state.current_token && state.current_token->type == TOKEN_PIPE)
-			state.current_token = state.current_token->next;
+		state = check_for_pipe(state, shell_state);
 	}
 	return (cmd_list);
 }

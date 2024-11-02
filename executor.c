@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:45:40 by tschetti          #+#    #+#             */
-/*   Updated: 2024/11/01 12:33:33 by odudniak         ###   ########.fr       */
+/*   Updated: 2024/11/02 15:30:58 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,9 @@ void	handle_parent_after_fork(pid_t pid, t_shell_state *shell_state)
 		{
 			sig = WTERMSIG(status);
 			shell_state->last_exit_status = 128 + sig;
-			if (sig == SIGQUIT)
+			/* if (sig == SIGQUIT)
 				write(STDERR_FILENO, "Quit (core dumped)\n", 19);
-			else if (sig == SIGINT)
+			else  */if (sig == SIGINT)
 				write(STDOUT_FILENO, "\n", 1);
 		}
 	}
