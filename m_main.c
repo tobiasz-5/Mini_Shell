@@ -73,9 +73,7 @@ void	shell_main_loop(t_shell_state *shell_state)
 		free(input);
 		restore_signals_after_command();
 		if (g_received_signal != 0)
-		{
 			g_received_signal = 0;
-		}
 		if (shell_state->exit_shell)
 			break ;
 	}
