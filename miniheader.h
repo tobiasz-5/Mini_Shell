@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniheader.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:56:39 by tschetti          #+#    #+#             */
-/*   Updated: 2024/11/01 01:55:36 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/11/02 16:33:57 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,7 @@ void			restore_signals_after_command(void);
 int				ft_isalnum(int c);
 int				ft_isdigit(int c);
 int				ft_isalpha(int c);
+char			*ft_strnstr(const char *big, const char *little, size_t len);
 void			init_env_list(t_shell_state *shell_state);
 void execute_external_command(t_command* all_cmds, t_command* command, char** args_array, t_shell_state* shell_state);
 char			**build_envp(t_shell_state *shell_state);
@@ -274,7 +275,7 @@ void			unset_env_var(t_env_var **env_list, const char *name);
 void			builtin_env(t_shell_state *shell_state);
 void execute_single_command(t_command* all_cmds, t_command* command, t_shell_state* shell_state);
 void			handle_export_command(t_env_var **env_list,
-					const char *input, bool double_quote, bool single_quote);
+					char *input, bool double_quote, bool single_quote);
 void			execute_builtin(t_command *command, char **args_array,
 					bool *args_quote_flags, t_shell_state *shell_state);
 int				ft_atoi(const char *str);
