@@ -6,7 +6,7 @@
 /*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:45:51 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/30 15:06:12 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/11/02 15:02:03 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ void	process_input_redirection(t_redirection *redirection,
 			exit(EXIT_FAILURE);
 		}
 		else
-			printf("he_chilfe = %s\n", redirection->heredoc_filename);
+			fprintf(stderr, "Opening heredoc file: %s\n", redirection->heredoc_filename);
 		filename = redirection->heredoc_filename;
 	}
 	else
