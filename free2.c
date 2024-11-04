@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:46:08 by tschetti          #+#    #+#             */
-/*   Updated: 2024/11/01 01:53:49 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/11/04 19:22:34 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	free_command_redirections(t_redirection *redirections)
 			free(current_redirection->filename);
 		if (current_redirection->heredoc_filename)
 		{
-			unlink(current_redirection->heredoc_filename);
 			free(current_redirection->heredoc_filename);
 			current_redirection->heredoc_filename = NULL;
 		}
