@@ -17,7 +17,7 @@ LDFLAGS = -lreadline
 SRCS = 	libft/a_libft.c libft/a_libft2.c libft/a_libft3.c libft/a_libft4.c libft/a_split.c \
 		builtins/builtin.c builtins/builtin2.c builtins/builtin3.c builtins/builtin4.c builtins/builtin5.c builtins/builtin_exit.c \
 		errors/errs.c errors/errs2.c errors/errs3.c \
-		executor.c exec/exec2.c exec/exec2utils.c exec/exec2_signals.c exec/exec3_pipe.c \
+		exec/exec.c exec/exec_init_args.c exec/exec_process_heredoc.c exec/exec_tmp_heredoc.c exec/exec2.c exec/exec2utils.c exec/exec2_signals.c exec/exec3_pipe.c \
 		exec/exec3_pipe2.c exec/exec3_wait.c exec/exec4_pipe.c exec/exec5.c exec/exec5_builtin.c \
 		exec/exec6_builtin.c exec/exec7_utils.c exec/exec7_child.c exec/exec8_child.c exec/exec10_heredoc.c exec/exec11.c \
 		exec/exec12.c \

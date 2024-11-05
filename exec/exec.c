@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor.c                                         :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: girindi <girindi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:45:40 by tschetti          #+#    #+#             */
-/*   Updated: 2024/11/05 16:32:11 by girindi          ###   ########.fr       */
+/*   Updated: 2024/11/05 17:05:54 by girindi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniheader.h"
+#include "../miniheader.h"
 
 void	exec_bltn_in_parent(t_command *command, char **args_array,
 			bool *args_quote_flags, t_shell_state *shell_state)

@@ -6,7 +6,7 @@
 /*   By: girindi <girindi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:56:39 by tschetti          #+#    #+#             */
-/*   Updated: 2024/11/05 16:26:26 by girindi          ###   ########.fr       */
+/*   Updated: 2024/11/05 16:48:57 by girindi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,8 +194,14 @@ typedef struct s_filename_vars
 
 void			free_command_and_args(t_command *command);
 void			clean_shell_state(t_shell_state *shell_state);
-int				process_all_heredocs(t_command *command_list,
-					t_shell_state *shell_state);
+int				process_all_heredocs(t_command *command_list, t_shell_state *shell_state);
+int				process_command_heredocs(t_command *current_cmd, t_shell_state *shell_state);
+int				create_temp_heredoc_file(char **heredoc_filename);
+void			read_and_expand_heredoc(const char *delimiter, int fd, bool is_quoted, t_shell_state *shell_state);
+void			handle_heredoc(t_redirection *redirection, char **heredoc_filename, t_shell_state *shell_state);
+void			clean_filename(t_redirection *redirection);
+void			int_to_str(int num, char *str);
+int				generate_unique_filename(t_filename_vars *vars);
 void			restore_signals_after_command(void);
 int				ft_isalnum(int c);
 int				ft_isdigit(int c);
@@ -331,6 +337,7 @@ int				process_quoted_token(char *input, char quote,
 int				process_special_token(char *input, t_token_list *token_list,
 					t_shell_state *shell_state);
 int				is_operator(char c);
+void			clean_filename(t_redirection *redirection);
 int				handle_builtin_redirections(t_command *command,
 					t_io_fds *fds, t_shell_state *shell_state);
 int				is_builtin(char *cmd_name);

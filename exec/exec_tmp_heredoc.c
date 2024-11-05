@@ -6,11 +6,11 @@
 /*   By: girindi <girindi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 16:19:56 by girindi           #+#    #+#             */
-/*   Updated: 2024/11/05 16:32:24 by girindi          ###   ########.fr       */
+/*   Updated: 2024/11/05 16:42:46 by girindi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniheader.h"
+#include "../miniheader.h"
 #define MAX_ATTEMPTS 100
 
 int	create_temp_heredoc_file(char **heredoc_filename)

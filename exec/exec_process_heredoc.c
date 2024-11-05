@@ -6,11 +6,11 @@
 /*   By: girindi <girindi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 16:03:08 by girindi           #+#    #+#             */
-/*   Updated: 2024/11/05 16:24:40 by girindi          ###   ########.fr       */
+/*   Updated: 2024/11/05 16:52:36 by girindi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniheader.h"
+#include "../miniheader.h"
 #define MAX_LINE_LENGTH 4096
 
 void	heredoc_input_loop(const char	*delimiter, int fd,

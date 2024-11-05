@@ -6,11 +6,11 @@
 /*   By: girindi <girindi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 16:31:41 by girindi           #+#    #+#             */
-/*   Updated: 2024/11/05 16:32:16 by girindi          ###   ########.fr       */
+/*   Updated: 2024/11/05 16:42:33 by girindi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniheader.h"
+#include "../miniheader.h"
 
 int	initialize_command_args(t_command *command, char ***args_array,
 				bool **args_quote_flags)

@@ -6,11 +6,11 @@
 /*   By: girindi <girindi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 01:12:23 by tschetti          #+#    #+#             */
-/*   Updated: 2024/11/05 16:36:33 by girindi          ###   ########.fr       */
+/*   Updated: 2024/11/05 16:57:42 by girindi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniheader.h"
+#include "../miniheader.h"
 
 #define MAX_EXPANDED_LINE 4096
 
@@ -102,4 +102,22 @@ char	*expand_var_in_heredoc(const char *input, t_shell_state *shell_state)
 	}
 	state.output[state.j] = '\0';
 	return (state.output);
+}
+
+void	expand_and_write_line(const char *line, int fd,
+				bool is_quoted, t_shell_state *shell_state)
+{
+	char	*expanded_line;
+
+	if (!is_quoted)
+	{
+		expanded_line = expand_var_in_heredoc(line, shell_state);
+		if (expanded_line)
+			write(fd, expanded_line, strlen(expanded_line));
+		else
+			write(fd, line, strlen(line));
+	}
+	else
+		write(fd, line, strlen(line));
+	write(fd, "\n", 1);
 }
