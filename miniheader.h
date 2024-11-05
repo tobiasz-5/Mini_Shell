@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniheader.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:56:39 by tschetti          #+#    #+#             */
-/*   Updated: 2024/11/04 13:27:42 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:45:49 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,7 @@ typedef struct s_filename_vars
 	int		fd;
 }	t_filename_vars;
 
+void			update_last_exit_status(t_shell_state *shell_state);
 void			free_command_and_args(t_command *command);
 void			clean_shell_state(t_shell_state *shell_state);
 int				process_all_heredocs(t_command *command_list,
