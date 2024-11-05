@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expander2_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:46:00 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/06 22:46:01 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:16:39 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniheader.h"
+#include "../miniheader.h"
 
 void	init_dasvidaniya_norminette(int *len, int *i)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   executor3_wait.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 20:55:30 by tschetti          #+#    #+#             */
-/*   Updated: 2024/11/04 15:59:27 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:10:38 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniheader.h"
+#include "../miniheader.h"
 
 void	create_pipe_if_needed(t_command *current_cmd, int pipe_fd[2])
 {

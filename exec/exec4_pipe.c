@@ -6,11 +6,11 @@
 /*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:45:45 by girindi           #+#    #+#             */
-/*   Updated: 2024/11/05 15:55:48 by negambar         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:10:38 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniheader.h"
+#include "../miniheader.h"
 
 void	call_perror_child_process_fd1(t_command *current_cmd)
 {

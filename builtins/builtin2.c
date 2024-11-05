@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:45:23 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/16 17:17:48 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:10:38 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniheader.h"
+#include "../miniheader.h"
 
 void	export_env_var(t_env_var **env_list, const char *name,
 			const char *value)

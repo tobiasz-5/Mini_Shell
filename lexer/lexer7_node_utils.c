@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer7_node_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:46:24 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/14 16:15:07 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:16:57 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniheader.h"
+#include "../miniheader.h"
 
 void	add_token_to_list(t_token_list *token_list, char *token_str)
 {

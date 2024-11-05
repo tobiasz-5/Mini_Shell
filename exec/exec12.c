@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   executor12_read_and_expand_utils.c                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 01:46:45 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/16 01:46:46 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:10:38 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniheader.h"
+#include "../miniheader.h"
 
 #define MAX_LINE_LENGTH 4096
 

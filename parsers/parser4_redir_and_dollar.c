@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser4_redir_and_dollar.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:46:49 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/30 16:58:33 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:17:16 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniheader.h"
+#include "../miniheader.h"
 
 int	handle_dollar_and_variable(t_parser_state *state,
 				t_command *command, t_shell_state *shell_state)

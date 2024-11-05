@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expander5_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:46:05 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/16 13:46:10 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:16:39 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniheader.h"
+#include "../miniheader.h"
 
 void	add_dollar_char(char **dest_ptr)
 {

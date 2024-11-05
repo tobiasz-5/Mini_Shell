@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expander3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:46:03 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/15 21:08:24 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:16:39 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniheader.h"
+#include "../miniheader.h"
 
 int	build_expanded_string(const char *token, t_var_expand *v_exp,
 				t_shell_state *shell_state)

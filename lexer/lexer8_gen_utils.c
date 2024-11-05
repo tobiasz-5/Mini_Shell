@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer8_gen_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:46:25 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/06 22:46:26 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:16:57 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniheader.h"
+#include "../miniheader.h"
 
 int	is_operator(char c)
 {

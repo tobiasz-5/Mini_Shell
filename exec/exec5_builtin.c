@@ -1,30 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor5_redir_builtin.c                          :+:      :+:    :+:   */
+/*   exec5_builtin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:45:47 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/30 11:31:49 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:27:25 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniheader.h"
-
-int	backup_fd(int old_fd, int *backup_fd, const char *error_msg)
-{
-	if (*backup_fd == -1)
-	{
-		*backup_fd = dup(old_fd);
-		if (*backup_fd < 0)
-		{
-			perror(error_msg);
-			return (-1);
-		}
-	}
-	return (0);
-}
+#include "../miniheader.h"
 
 int	handle_builtin_redirections(t_command *command, t_io_fds *fds,
 					t_shell_state *shell_state)

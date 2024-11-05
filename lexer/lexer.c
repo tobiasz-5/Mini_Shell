@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniheader.h"
+#include "../miniheader.h"
 
 void	lexer_var_init(t_token_node **head, t_token_node **tail,
 			t_token_state *state, t_token_list *token_list)

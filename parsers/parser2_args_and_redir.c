@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser2_args_and_redir.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:46:45 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/29 18:51:39 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:27:25 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniheader.h"
+#include "../miniheader.h"
 
 int	add_argument(t_command *command, char *arg_value, bool single_quote,
 				bool double_quote)

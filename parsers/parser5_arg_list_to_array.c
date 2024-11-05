@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser5_arg_list_to_array.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:46:51 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/30 12:11:23 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:17:16 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniheader.h"
+#include "../miniheader.h"
 
 int	count_arguments(t_list_args *args_list)
 {

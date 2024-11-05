@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   executor10_heredoc_expansion.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 01:12:23 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/16 01:12:24 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:10:38 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniheader.h"
+#include "../miniheader.h"
 
 #define MAX_EXPANDED_LINE 4096
 

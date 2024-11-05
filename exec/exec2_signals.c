@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   executor2_signals.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 23:42:51 by tschetti          #+#    #+#             */
-/*   Updated: 2024/11/04 12:20:19 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:10:38 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniheader.h"
+#include "../miniheader.h"
 
 int	initialize_command_args(t_command *command, char ***args_array,
 				bool **args_quote_flags)

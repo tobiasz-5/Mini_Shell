@@ -14,15 +14,19 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g 
 LDFLAGS = -lreadline
-SRCS = 	a_libft.c a_libft2.c a_libft3.c a_libft4.c a_split.c builtin.c builtin2.c builtin3.c builtin4.c builtin5.c builtin_exit.c \
-		errs.c errs2.c errs3.c executor.c executor2.c executor2env.c executor2_signals.c executor3_pipe.c executor3_setup_child.c executor3_wait.c executor4_pipe_utils.c executor5_redir_builtin.c \
-		executor6_redir_builtin_utils.c executor7_redir_child.c executor8_redir_child_utils.c \
-		executor10_heredoc_expansion.c get_cmd_path.c executor11_read_write_heredoc.c \
-		executor12_read_and_expand_utils.c expander.c expander2_utils.c expander3.c expander4.c expander5_utils.c \
-		free.c free2.c lexer.c lexer2_process.c lexer3_special_process.c lexer4_handle_token.c lexer4_handle_operator.c \
-		lexer5_handle_token_utils.c lexer6_create_token.c lexer7_node_utils.c lexer8_gen_utils.c \
-		m_main.c m_minishell.c parser.c parser2_args_and_redir.c parser3_args_and_redir_utils.c \
-		parser4_redir_and_dollar.c parser5_arg_list_to_array.c signals.c token.c
+SRCS = 	libft/a_libft.c libft/a_libft2.c libft/a_libft3.c libft/a_libft4.c libft/a_split.c \
+		builtins/builtin.c builtins/builtin2.c builtins/builtin3.c builtins/builtin4.c builtins/builtin5.c builtins/builtin_exit.c \
+		errors/errs.c errors/errs2.c errors/errs3.c \
+		executor.c exec/exec2.c exec/exec2utils.c exec/exec2_signals.c exec/exec3_pipe.c \
+		exec/exec3_pipe2.c exec/exec3_wait.c exec/exec4_pipe.c exec/exec5.c exec/exec5_builtin.c \
+		exec/exec6_builtin.c exec/exec7_utils.c exec/exec7_child.c exec/exec8_child.c exec/exec10_heredoc.c exec/exec11.c \
+		exec/exec12.c \
+		get_cmd_path.c expanders/expander.c expanders/expander2_utils.c expanders/expander3.c expanders/expander4.c expanders/expander5_utils.c \
+		free.c free2.c\
+		lexer/lexer.c lexer/lexer2_process.c lexer/lexer3_special_process.c lexer/lexer4_handle_token.c lexer/lexer4_handle_operator.c \
+		lexer/lexer5_handle_token_utils.c lexer/lexer6_create_token.c lexer/lexer7_node_utils.c lexer/lexer8_gen_utils.c \
+		m_main.c m_minishell.c parsers/parser.c parsers/parser2_args_and_redir.c parsers/parser3_args_and_redir_utils.c \
+		parsers/parser4_redir_and_dollar.c parsers/parser5_arg_list_to_array.c signals.c token.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME) mini_art

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   a_libft.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:40:57 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/06 22:40:58 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:27:25 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniheader.h"
+#include "../miniheader.h"
 
 void	*ft_memcpy(void *dest, const void *src, size_t n)
 {

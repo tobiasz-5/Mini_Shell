@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   executor3_setup_child.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 19:36:14 by tschetti          #+#    #+#             */
-/*   Updated: 2024/11/04 12:18:48 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:10:38 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniheader.h"
+#include "../miniheader.h"
 
 void	init_fds_bye_norminette(t_io_fds *fds)
 {

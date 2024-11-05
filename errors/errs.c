@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   errs.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:45:34 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/06 22:45:35 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:27:25 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniheader.h"
+#include "../miniheader.h"
 
 void	init_var_for_parsing_tokens(t_token_node *tokens, t_parser_state *state,
 			t_command **cmd_list, t_command **last_command)

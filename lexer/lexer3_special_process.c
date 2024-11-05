@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer3_special_process.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:46:17 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/16 17:06:58 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:16:57 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniheader.h"
+#include "../miniheader.h"
 
 int	handle_expanded_token(char **temp_token, char quote,
 				t_shell_state *shell_state)

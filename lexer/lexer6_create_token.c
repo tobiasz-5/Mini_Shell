@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer6_create_token.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:46:22 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/14 16:29:27 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:16:57 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniheader.h"
+#include "../miniheader.h"
 
 t_token_node	*create_token_node(char *token_str, bool single_quote,
 					bool double_quote)

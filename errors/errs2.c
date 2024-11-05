@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   errs2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:45:36 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/06 22:45:37 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:16:25 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniheader.h"
+#include "../miniheader.h"
 
 void	init_vars_for_expctd_cmdname(t_parser_state *state, t_command *command)
 {

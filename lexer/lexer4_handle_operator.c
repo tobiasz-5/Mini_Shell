@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer4_handle_operator.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 19:14:39 by tschetti          #+#    #+#             */
-/*   Updated: 2024/10/16 19:15:05 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:16:57 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniheader.h"
+#include "../miniheader.h"
 
 int	handle_double_operator(char *input, t_token_list *token_list)
 {
