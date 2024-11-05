@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniheader.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: girindi <girindi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:56:39 by tschetti          #+#    #+#             */
-/*   Updated: 2024/11/04 13:27:42 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:26:26 by girindi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,6 +269,7 @@ void			restore_standard_fds(t_io_fds *fds);
 void			free_args_array(char **args_array);
 void			handle_sigint(int sig);
 void			handle_sigquit(int sig);
+void			handle_sigint_heredoc(int sig);
 void			handle_child_redirections(t_command *command,
 					t_io_fds *fds, t_shell_state *shell_state);
 void			unset_env_var(t_env_var **env_list, const char *name);

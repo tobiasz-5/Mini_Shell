@@ -3,22 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   executor2_signals.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: girindi <girindi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 23:42:51 by tschetti          #+#    #+#             */
-/*   Updated: 2024/11/04 12:20:19 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:32:30 by girindi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniheader.h"
-
-int	initialize_command_args(t_command *command, char ***args_array,
-				bool **args_quote_flags)
-{
-	if (prepare_arguments(command, args_array, args_quote_flags) != 0)
-		return (-1);
-	return (0);
-}
 
 void	handle_signals_in_child(void)
 {
@@ -46,6 +38,11 @@ void	handle_signals_in_parent(void)
 {
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
+}
+
+void	handle_sigint_heredoc(int sig)
+{
+	g_received_signal = sig;
 }
 
 void	handle_fork(t_command *all_cmds, t_fork_info *finfo,
