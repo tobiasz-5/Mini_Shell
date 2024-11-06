@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: girindi <girindi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/06 22:56:39 by tschetti          #+#    #+#             */
-/*   Updated: 2024/11/05 16:48:57 by girindi          ###   ########.fr       */
+/*   Created: 2024/10/06 22:56:39 by girindi          #+#    #+#             */
+/*   Updated: 2024/11/05 17:16:27 by girindi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,11 +194,15 @@ typedef struct s_filename_vars
 
 void			free_command_and_args(t_command *command);
 void			clean_shell_state(t_shell_state *shell_state);
-int				process_all_heredocs(t_command *command_list, t_shell_state *shell_state);
-int				process_command_heredocs(t_command *current_cmd, t_shell_state *shell_state);
+int				process_all_heredocs(t_command *command_list,
+					t_shell_state *shell_state);
+int				process_command_heredocs(t_command *current_cmd,
+					t_shell_state *shell_state);
 int				create_temp_heredoc_file(char **heredoc_filename);
-void			read_and_expand_heredoc(const char *delimiter, int fd, bool is_quoted, t_shell_state *shell_state);
-void			handle_heredoc(t_redirection *redirection, char **heredoc_filename, t_shell_state *shell_state);
+void			read_and_expand_heredoc(const char *delimiter,
+					int fd, bool is_quoted, t_shell_state *shell_state);
+void			handle_heredoc(t_redirection *redirection,
+					char **heredoc_filename, t_shell_state *shell_state);
 void			clean_filename(t_redirection *redirection);
 void			int_to_str(int num, char *str);
 int				generate_unique_filename(t_filename_vars *vars);

@@ -6,7 +6,7 @@
 /*   By: girindi <girindi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 16:31:41 by girindi           #+#    #+#             */
-/*   Updated: 2024/11/05 16:42:33 by girindi          ###   ########.fr       */
+/*   Updated: 2024/11/05 17:12:10 by girindi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	initialize_command_args(t_command *command, char ***args_array,
 		return (-1);
 	return (0);
 }
+
 int	prepare_arguments(t_command *command, char ***args_array,
 				bool **args_quote_flags)
 {

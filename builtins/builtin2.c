@@ -5,7 +5,7 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/06 22:45:23 by tschetti          #+#    #+#             */
+/*   Created: 2024/10/06 22:45:23 by girindi          #+#    #+#             */
 /*   Updated: 2024/11/05 16:10:38 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -137,40 +137,3 @@ void	handle_export_command(t_env_var **env_list, const char *input,
 	free(var_name);
 	free(var_value);
 }
-
-// void	handle_export_command(t_env_var **env_list, const char *input,
-// 			bool double_quote, bool single_quote)
-// {
-// 	char	*equal_sign;
-// 	char	*var_name;
-// 	char	*var_value;
-
-// 	equal_sign = ft_strchr(input, '=');
-// 	if (equal_sign)
-// 	{
-// 		var_name = ft_strndup(input, equal_sign - input);
-// 		var_value = ft_strdup(equal_sign + 1);
-// 	}
-// 	else
-// 	{
-// 		var_name = ft_strdup(input);
-// 		var_value = NULL;
-// 	}
-// 	if (!var_name || !*var_name || !is_valid_var_name(var_name))
-// 	{
-// 		printf("export: `%s`: not a valid identifier\n", input);
-// 		free(var_name);
-// 		free(var_value);
-// 		return ;
-// 	}
-// 	if (var_value == NULL)
-// 		export_env_var_empty(env_list, var_name);
-// 	else
-// 	{
-// 		if (var_value)
-// 			process_export_value(&var_value, double_quote, single_quote);
-// 		export_env_var(env_list, var_name, var_value);
-// 	}
-// 	free(var_name);
-// 	free(var_value);
-// }
