@@ -14,7 +14,7 @@
 
 void	handle_home_error(t_shell_state *shell_state)
 {
-	fprintf(stderr, "cd: HOME non impostata\n");
+	printf("cd: HOME non impostata\n");
 	shell_state->last_exit_status = 1;
 }
 
@@ -30,7 +30,7 @@ void	execute_cd(char **args_array, t_shell_state *shell_state)
 	}
 	else if (args_array[2] != NULL)
 	{
-		fprintf(stderr, "bash: cd: too many arguments\n");
+		printf("bash: cd: too many arguments\n");
 		shell_state->last_exit_status = 1;
 		return ;
 	}

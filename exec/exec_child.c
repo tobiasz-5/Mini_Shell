@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor7_redir_child.c                            :+:      :+:    :+:   */
+/*   exec7_child.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -56,7 +56,7 @@ void	process_input_redirection(t_redirection *redirection,
 			exit(EXIT_FAILURE);
 		}
 		else
-			fprintf(stderr, "Open heredc %s\n", redirection->heredoc_filename);
+			printf("Open heredc %s\n", redirection->heredoc_filename);
 		filename = redirection->heredoc_filename;
 	}
 	else
