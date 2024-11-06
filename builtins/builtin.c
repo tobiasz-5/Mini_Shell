@@ -6,7 +6,7 @@
 /*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:45:20 by tschetti          #+#    #+#             */
-/*   Updated: 2024/11/05 16:10:38 by negambar         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:46:47 by negambar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	handle_home_error(t_shell_state *shell_state)
 {
-	fprintf(stderr, "cd: HOME non impostata\n");
+	printf("cd: HOME non impostata\n");
 	shell_state->last_exit_status = 1;
 }
 
@@ -30,7 +30,7 @@ void	execute_cd(char **args_array, t_shell_state *shell_state)
 	}
 	else if (args_array[2] != NULL)
 	{
-		fprintf(stderr, "bash: cd: too many arguments\n");
+		printf("bash: cd: too many arguments\n");
 		shell_state->last_exit_status = 1;
 		return ;
 	}
