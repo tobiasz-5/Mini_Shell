@@ -53,3 +53,12 @@ void	init_sign(void)
 	sa_pipe.sa_flags = 0;
 	sigaction(SIGPIPE, &sa_pipe, NULL);
 }
+
+void	update_last_exit_status(t_shell_state *shell_state)
+{
+	if (g_received_signal)
+	{
+		shell_state->last_exit_status = 128 + g_received_signal;
+		g_received_signal = 0;
+	}
+} 

@@ -192,6 +192,7 @@ typedef struct s_filename_vars
 	int		fd;
 }	t_filename_vars;
 
+void			update_last_exit_status(t_shell_state *shell_state);
 void			free_command_and_args(t_command *command);
 void			clean_shell_state(t_shell_state *shell_state);
 int				process_all_heredocs(t_command *command_list,
