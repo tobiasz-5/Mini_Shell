@@ -73,7 +73,7 @@ int	parse_echo_options(char **args_array, int *newline)
 		j = 1;
 		if ((args_array[i][0] == '-'
 			|| (args_array[i][0] == '\'' && args_array[i][1] == '-')
-				|| (args_array[i][0] == '\"' && args_array[i][1] == '-')))
+				|| (args_array[i][0] == '\"' && args_array[i][1] == '-')) && args_array[i][0] == 'n')
 		{
 			while (args_array[i][j] == 'n' || args_array[i][j] == '\"'
 				|| args_array[i][j] == '\'')
