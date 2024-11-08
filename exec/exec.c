@@ -16,7 +16,9 @@ void	exec_bltn_in_parent(t_command *command, char **args_array,
 			bool *args_quote_flags, t_shell_state *shell_state)
 {
 	t_io_fds	fds;
+	int			old_stdin_fd;
 
+	old_stdin_fd = dup(STDIN_FILENO);
 	init_io_fds(&fds);
 	if (handle_builtin_redirections(command, &fds, shell_state) != 0)
 	{
@@ -25,6 +27,8 @@ void	exec_bltn_in_parent(t_command *command, char **args_array,
 	}
 	execute_builtin(command, args_array, args_quote_flags, shell_state);
 	restore_standard_fds(&fds);
+	dup2(old_stdin_fd, STDIN_FILENO);
+	close(old_stdin_fd);
 }
 
 void	exec_in_child(t_command *all_cmds, t_fork_info *finfo,
@@ -35,16 +39,13 @@ void	exec_in_child(t_command *all_cmds, t_fork_info *finfo,
 
 	init_io_fds(&fds);
 	is_builtin_cmd = is_builtin(finfo->cmd->cmd_name);
-	handle_child_redirections(finfo->cmd, &fds, shell_state);
+	if (!handle_child_redirections(finfo->cmd, &fds, shell_state))
+		free_all(all_cmds, finfo, shell_state);
 	if (is_builtin_cmd)
 	{
 		execute_builtin(finfo->cmd, finfo->args_array,
 			finfo->args_quote_flags, shell_state);
-		free_args_array(finfo->args_array);
-		free(finfo->args_quote_flags);
-		free_command_list(all_cmds);
-		clean_shell_state(shell_state);
-		exit(shell_state->last_exit_status);
+		free_all(all_cmds, finfo, shell_state);
 	}
 	else
 	{
@@ -92,7 +93,7 @@ void	execute_single_command(t_command *all_cmds,
 
 	redirection = command->redirections;
 	if (initialize_command_args(command, &args_array, &args_quote_flags) != 0)
-		return ;
+		return (free_args_array(args_array));
 	is_builtin_cmd = is_builtin(command->cmd_name);
 	fork_info = (t_fork_info){command, args_array, args_quote_flags};
 	if (is_builtin_cmd && command->next == NULL)

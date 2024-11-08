@@ -56,3 +56,13 @@ void	free_token_list(t_token_node *tokens)
 		current = next;
 	}
 }
+
+void	free_all(t_command *all_cmds, t_fork_info *finfo,
+			t_shell_state *shell_state)
+{
+	free_args_array(finfo->args_array);
+	free(finfo->args_quote_flags);
+	free_command_list(all_cmds);
+	clean_shell_state(shell_state);
+	exit(shell_state->last_exit_status);
+}

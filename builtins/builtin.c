@@ -61,24 +61,24 @@ void	execute_pwd(t_shell_state *shell_state)
 	}
 }
 
-int	parse_echo_options(char **args_array, int *newline)
+int	parse_echo_options(char **array, int *newline)
 {
 	int	i;
 	int	j;
 
 	i = 1;
 	*newline = 1;
-	while (args_array[i])
+	while (array[i])
 	{
 		j = 1;
-		if ((args_array[i][0] == '-'
-			|| (args_array[i][0] == '\'' && args_array[i][1] == '-')
-				|| (args_array[i][0] == '\"' && args_array[i][1] == '-')) && args_array[i][0] == 'n')
+		if ((array[i][0] == '-' || (array[i][0] == '\'' && array[i][1] == '-')
+		|| (array[i][0] == '\"' && array[i][1] == '-'))
+		&& array[i][1] == 'n')
 		{
-			while (args_array[i][j] == 'n' || args_array[i][j] == '\"'
-				|| args_array[i][j] == '\'')
+			while (array[i][j] == 'n' || array[i][j] == '\"'
+				|| array[i][j] == '\'')
 				j++;
-			if (args_array[i][j] == '\0')
+			if (array[i][j] == '\0')
 			{
 				*newline = 0;
 				i++;

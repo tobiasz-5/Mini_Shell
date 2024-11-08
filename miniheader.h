@@ -281,7 +281,7 @@ void			free_args_array(char **args_array);
 void			handle_sigint(int sig);
 void			handle_sigquit(int sig);
 void			handle_sigint_heredoc(int sig);
-void			handle_child_redirections(t_command *command,
+int				handle_child_redirections(t_command *command,
 					t_io_fds *fds, t_shell_state *shell_state);
 void			unset_env_var(t_env_var **env_list, const char *name);
 void			builtin_env(t_shell_state *shell_state);
@@ -372,6 +372,8 @@ t_command		*parse_command(t_parser_state *state,
 					t_shell_state *shell_state);
 t_token_node	*lexer(char *input, t_shell_state *shell_state);
 int				expand_variable(char **dest_ptr, const char **cursor,
+					t_shell_state *shell_state);
+void			free_all(t_command *all_cmds, t_fork_info *finfo,
 					t_shell_state *shell_state);
 t_env_var		*find_local_env_var(t_env_var *env_list, const char *name);
 char			*expand_var_in_heredoc(const char *input,

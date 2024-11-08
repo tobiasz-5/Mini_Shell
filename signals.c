@@ -61,4 +61,4 @@ void	update_last_exit_status(t_shell_state *shell_state)
 		shell_state->last_exit_status = 128 + g_received_signal;
 		g_received_signal = 0;
 	}
-} 
+}

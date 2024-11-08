@@ -12,7 +12,7 @@
 
 #include "../miniheader.h"
 
-static char	**free_all(char **matrice, int i)
+static char	**free_all_split(char **matrice, int i)
 {
 	while (--i >= 0)
 	{
@@ -42,7 +42,7 @@ static char	**ft_matrice(char const *s, char **matrice, int n_token, char c)
 			len++;
 		matrice[i] = (char *)malloc((len + 1) * sizeof(char));
 		if (!matrice[i])
-			return (free_all(matrice, i));
+			return (free_all_split(matrice, i));
 		matrice[i][len] = '\0';
 		back = len;
 		while (len-- > 0)

@@ -35,7 +35,7 @@ int	handle_exit_error(char **args_array, t_shell_state *shell_state)
 	printf("Mini exit: %s num required\n", args_array[1]);
 	shell_state->exit_shell = true;
 	shell_state->exit_code = 2;
-	return (-1);
+	return (2);
 }
 
 int	validate_exit_code(char **args_array, t_shell_state *shell_state)
@@ -47,7 +47,7 @@ int	validate_exit_code(char **args_array, t_shell_state *shell_state)
 	while (args_array[1][i])
 	{
 		if (!ft_isdigit(args_array[1][i]) && args_array[1][i] != '-')
-			handle_exit_error(args_array, shell_state);
+			return (handle_exit_error(args_array, shell_state));
 		i++;
 	}
 	exit_value = ft_atol(args_array[1]);

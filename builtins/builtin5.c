@@ -50,6 +50,9 @@ void	execute_export(char **args_array, bool *args_quote_flags,
 void	execute_builtin(t_command *command, char **args_array,
 			bool *args_quote_flags, t_shell_state *shell_state)
 {
+	int	i;
+
+	i = 0;
 	if (ft_strcmp(command->cmd_name, "cd") == 0)
 		execute_cd(args_array, shell_state);
 	else if (ft_strcmp(command->cmd_name, "pwd") == 0)
@@ -67,6 +70,9 @@ void	execute_builtin(t_command *command, char **args_array,
 		if (args_array[1] == NULL)
 			printf("unset: missing argument\n");
 		else
-			unset_env_var(&shell_state->env_list, args_array[1]);
+		{
+			while (args_array[i++])
+				unset_env_var(&shell_state->env_list, args_array[i]);
+		}
 	}
 }

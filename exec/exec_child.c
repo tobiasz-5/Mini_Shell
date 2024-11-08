@@ -33,12 +33,12 @@ int	open_input_file(const char *filename)
 	if (fd < 0)
 	{
 		perror("Error opening input file");
-		exit(EXIT_FAILURE);
+		return (-999);
 	}
 	return (fd);
 }
 
-void	process_input_redirection(t_redirection *redirection,
+int	process_input_redirection(t_redirection *redirection,
 			int *last_input_fd)
 {
 	const char	*filename;
@@ -55,22 +55,24 @@ void	process_input_redirection(t_redirection *redirection,
 			write(2, "Errorheoc_filme NULL hdle_child_redions\n", 41);
 			exit(EXIT_FAILURE);
 		}
-		else
-			printf("Open heredc %s\n", redirection->heredoc_filename);
 		filename = redirection->heredoc_filename;
 	}
 	else
-		return ;
+		return (1);
 	*last_input_fd = open_input_file(filename);
+	if (*last_input_fd == -999)
+		return (0);
+	return (1);
 }
 
-void	process_redirection(t_redirection *redirection,
+int	process_redirection(t_redirection *redirection,
 			int *last_input_fd, t_io_fds *fds, t_shell_state *shell_state)
 {
 	if (redirection->type == TOKEN_REDIR_IN
 		|| redirection->type == TOKEN_HEREDOC)
 	{
-		process_input_redirection(redirection, last_input_fd);
+		if (!process_input_redirection(redirection, last_input_fd))
+			return (0);
 	}
 	else if (redirection->type == TOKEN_REDIR_OUT
 		|| redirection->type == TOKEN_REDIR_APPEND)
@@ -80,9 +82,10 @@ void	process_redirection(t_redirection *redirection,
 			exit(EXIT_FAILURE);
 		}
 	}
+	return (1);
 }
 
-void	handle_child_redirections(t_command *command,
+int	handle_child_redirections(t_command *command,
 			t_io_fds *fds, t_shell_state *shell_state)
 {
 	t_redirection	*redirection;
@@ -92,8 +95,10 @@ void	handle_child_redirections(t_command *command,
 	last_input_fd = -1;
 	while (redirection)
 	{
-		process_redirection(redirection, &last_input_fd, fds, shell_state);
+		if (!process_redirection(redirection, &last_input_fd, fds, shell_state))
+			return (0);
 		redirection = redirection->next;
 	}
 	finalize_input_redirection(last_input_fd);
+	return (1);
 }
