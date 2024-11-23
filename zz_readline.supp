@@ -1,0 +1,23 @@
+{
+   unique_readline_leak
+   Memcheck:Leak
+   ...
+   fun:readline
+   ...
+}
+
+{
+   unique_add_history_leak
+   Memcheck:Leak
+   ...
+   fun:add_history
+   ...
+}
+
+{
+   unique_readline_internal_char_leak
+   Memcheck:Leak
+   ...
+   fun:readline_internal_char
+   ...
+}
