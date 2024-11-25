@@ -6,12 +6,15 @@
 /*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 22:46:03 by girindi           #+#    #+#             */
-/*   Updated: 2024/11/21 18:02:51 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/11/23 16:54:53 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../miniheader.h"
 
+/*
+Costruisce stringa espansa sostituendo variabili presenti in input
+*/
 int	build_expanded_string(const char *token, t_var_expand *v_exp,
 				t_shell_state *shell_state)
 {
@@ -40,6 +43,9 @@ int	build_expanded_string(const char *token, t_var_expand *v_exp,
 	return (0);
 }
 
+/*
+Gestisce len per espansione di una var, aggiorna anche il cursore/puntatore
+*/
 int	handle_variable_expansion(const char **cursor, int length,
 				t_var_expand *v_exp, t_shell_state *shell_state)
 {
@@ -86,6 +92,10 @@ int	calculate_total_length(const char *token, t_var_expand *v_exp,
 	return (0);
 }
 
+/*
+Espande tutte le variabili dell input, tramite build_expanded_string
+e restituisce la stringa completa
+*/
 char	*expand_variable_in_token(const char *token, t_var_expand *v_exp,
 					t_shell_state *shell_state)
 {

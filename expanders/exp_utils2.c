@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expander5_utils.c                                  :+:      :+:    :+:   */
+/*   exp_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/06 22:46:05 by girindi          #+#    #+#             */
-/*   Updated: 2024/11/05 16:16:39 by negambar         ###   ########.fr       */
+/*   Created: 2024/11/23 16:46:05 by tschetti          #+#    #+#             */
+/*   Updated: 2024/11/23 16:46:07 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../miniheader.h"
 
+/*
+Aggiunge $ a dest e avanza il puntatore
+*/
 void	add_dollar_char(char **dest_ptr)
 {
 	**dest_ptr = '$';
 	(*dest_ptr)++;
 }
 
+/*
+Copia testo "letterale" (non var o simboli speciali) in dest
+*/
 int	copy_literal_text(char **dest_ptr, const char *start, const char *end)
 {
 	int	len;
@@ -41,6 +47,9 @@ int	get_variable_name_length(const char *str)
 	return (var_len);
 }
 
+/*
+trova len valore variabile
+*/
 int	get_variable_value_length(const char *var_name, int var_len,
 					t_shell_state *shell_state)
 {

@@ -6,12 +6,15 @@
 /*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 15:06:07 by tschetti          #+#    #+#             */
-/*   Updated: 2024/11/23 15:06:09 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/11/25 14:15:20 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../miniheader.h"
 
+/*
+espande token con VAR tra doppie virgolette, altrimenti errore
+*/
 int	handle_expanded_token(char **temp_token, char quote,
 				t_shell_state *shell_state)
 {

@@ -1,17 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer4_handle_operator.c                           :+:      :+:    :+:   */
+/*   lexer_handle_operator.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/16 19:14:39 by girindi          #+#    #+#             */
-/*   Updated: 2024/11/05 16:16:57 by negambar         ###   ########.fr       */
+/*   Created: 2024/11/25 15:43:25 by tschetti          #+#    #+#             */
+/*   Updated: 2024/11/25 15:52:25 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../miniheader.h"
 
+/*
+gestisce operatore doppio >>
+->copia stringa due caratteri dall input,
+crea il nodo, libera
+*/
 int	handle_double_operator(char *input, t_token_list *token_list)
 {
 	char	*operator_str;
@@ -28,6 +33,9 @@ int	handle_double_operator(char *input, t_token_list *token_list)
 	return (0);
 }
 
+/*
+stessa logica ma per un singolo op >, <
+*/
 int	handle_single_operator(char *input, t_token_list *token_list)
 {
 	char	*operator_str;
@@ -44,6 +52,10 @@ int	handle_single_operator(char *input, t_token_list *token_list)
 	return (0);
 }
 
+/*
+gestisce operatori,
+determina se doppio o singolo -> due flussi diversi
+*/
 int	handle_operator_token(char *input, t_token_list *token_list)
 {
 	char	current_char;

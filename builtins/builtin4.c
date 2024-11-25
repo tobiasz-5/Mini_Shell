@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   builtin4.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/06 22:45:30 by girindi          #+#    #+#             */
-/*   Updated: 2024/11/05 16:10:38 by negambar         ###   ########.fr       */
+/*   Created: 2024/11/23 15:47:11 by tschetti          #+#    #+#             */
+/*   Updated: 2024/11/23 15:49:37 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../miniheader.h"
 
+/*
+Cerca una variabile nella lista delle variabili di ambiente locali
+*/
 t_env_var	*find_env_var(t_env_var *env_list, const char *name)
 {
 	t_env_var	*current;

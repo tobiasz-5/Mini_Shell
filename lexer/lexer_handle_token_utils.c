@@ -1,17 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer5_handle_token_utils.c                        :+:      :+:    :+:   */
+/*   lexer_handle_token_utils.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/06 22:46:21 by girindi          #+#    #+#             */
-/*   Updated: 2024/11/05 16:16:57 by negambar         ###   ########.fr       */
+/*   Created: 2024/11/25 15:25:23 by tschetti          #+#    #+#             */
+/*   Updated: 2024/11/25 15:42:40 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../miniheader.h"
 
+/*
+Crea nodo per operatore (<,>,>>)
+-Prende stringa operator_str e incremento -> + 1 se
+single operatore + 2 se double operator <, >>
+-> salva stato virgolette
+-> aggiunge nodo alla lista
+-> avanza cursore di increment +1 o + 2
+->ritorna posizione aggiornata cursore
+*/
 int	create_operator_node(char *operator_str, int increment,
 				t_token_list *token_list)
 {

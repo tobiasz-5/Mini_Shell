@@ -1,17 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer8_gen_utils.c                                 :+:      :+:    :+:   */
+/*   lexer_gen_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/06 22:46:25 by girindi          #+#    #+#             */
-/*   Updated: 2024/11/05 16:16:57 by negambar         ###   ########.fr       */
+/*   Created: 2024/11/25 15:59:37 by tschetti          #+#    #+#             */
+/*   Updated: 2024/11/25 15:59:39 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../miniheader.h"
 
+/*
+se 'c'
+e' uno di quei simboli resituisce vero->1
+altrimenti falso0
+*/
 int	is_operator(char c)
 {
 	return (c == '|' || c == '<' || c == '>' || c == '$');

@@ -1,17 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer4_handle_token.c                              :+:      :+:    :+:   */
+/*   lexer_handle_token.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/06 22:46:19 by girindi          #+#    #+#             */
-/*   Updated: 2024/11/05 16:16:57 by negambar         ###   ########.fr       */
+/*   Created: 2024/11/25 14:41:43 by tschetti          #+#    #+#             */
+/*   Updated: 2024/11/25 15:23:47 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../miniheader.h"
 
+/*
+"Crea" token TOKEN_VARIABLE (cio che segue $)
+a partire da sottostringa -> token_list->i - start
+dell'input.
+contrassegna come TOKEN_VARIABLE 
+*/
 int	create_and_add_variable_token(char *input, int start,
 				t_token_list *token_list)
 {
@@ -34,6 +40,12 @@ int	create_and_add_variable_token(char *input, int start,
 	return (0);
 }
 
+/*
+Gestisce token variabile 
+-> trova len nome
+-> funzione di supporto per creazione ->create_and_add...
+-> Restituisce posizione aggiornata
+*/
 int	handle_variable_token(char *input, t_token_list *token_list)
 {
 	int	start;
@@ -47,6 +59,15 @@ int	handle_variable_token(char *input, t_token_list *token_list)
 	return (token_list->i);
 }
 
+/*
+gestisce token $?
+exit status
+-> trasforma l'intero in stringa -> itoa
+-> crea nodo per valore exit status
+-> aggiorna suo tipo -> WORD
+-> aggiorna puntatore/cursore -> +2 (salta '$''?')
+-> aggiunge il nodo alla lista
+*/
 int	handle_exit_status_token(t_token_list *token_list,
 				t_shell_state *shell_state)
 {
@@ -68,6 +89,17 @@ int	handle_exit_status_token(t_token_list *token_list,
 	return (token_list->i);
 }
 
+/*
+gestisce token che inizia con $
+-> se subito dopo abbiamo ? -> gestisco exit_status
+altrimenti:
+creo nodo per il token dollar
+->gli assegno il suo tipo -> TOKEN_DOLLAR
+->va oltre '$'
+->analizza se la sintassi del name e' valida [isalnum,_]
+->gestisce il token_variable
+->ritorna posizione/puntatore/cursore aggiornato
+*/
 int	handle_dollar_token(char *input, t_token_list *token_list,
 			t_shell_state *shell_state)
 {
