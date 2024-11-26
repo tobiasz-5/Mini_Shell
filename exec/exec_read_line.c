@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor11_read_write_heredoc.c                    :+:      :+:    :+:   */
+/*   exec_read_line.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/16 01:20:53 by girindi          #+#    #+#             */
-/*   Updated: 2024/11/05 16:10:38 by negambar         ###   ########.fr       */
+/*   Created: 2024/11/26 19:08:30 by tschetti          #+#    #+#             */
+/*   Updated: 2024/11/26 19:35:18 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 
 #define MAX_LINE_LENGTH 4096
 
+/*
+gestisce errori durante la lettura
+se read fallisce chiama perror e termina
+se read fallisce ma l errore e' 
+eintr (interruzione tramite segnale) termina
+senza chiamare perror
+*/
 bool	handle_read_error(ssize_t bytes_read)
 {
 	if (bytes_read == -1 && errno == EINTR)
@@ -28,6 +35,16 @@ bool	handle_read_error(ssize_t bytes_read)
 	return (false);
 }
 
+/*
+legge una riga di input, carattere per carattere
+-len della linea inizializzata a 0
+-flag per uscire dal loop
+esce se:
+c'e un errore di lettura-> handle_read_error
+raggiunge fine file
+c'e un carattere new_line
+altrimenti aggiunge il carattere letto alla linea e aggiorna len
+*/
 bool	read_input_line(char *line, size_t *line_len)
 {
 	char	buffer[1];

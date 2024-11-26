@@ -1,17 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser5_arg_list_to_array.c                        :+:      :+:    :+:   */
+/*   parser_args_to_list.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/06 22:46:51 by girindi          #+#    #+#             */
-/*   Updated: 2024/11/05 16:17:16 by negambar         ###   ########.fr       */
+/*   Created: 2024/11/25 18:34:47 by tschetti          #+#    #+#             */
+/*   Updated: 2024/11/26 12:27:57 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../miniheader.h"
 
+/*
+conta numero di argomenti in arg_list
+ritorna il numero totale di argomenti
+*/
 int	count_arguments(t_list_args *args_list)
 {
 	int	count;
@@ -25,6 +29,13 @@ int	count_arguments(t_list_args *args_list)
 	return (count);
 }
 
+/*
+controlla che args_array si stato allocato correttamente o
+che ci sia almeno un argomento quando allochiamo array per
+args_quote_flags -> libera sempre args_array, libera 
+anche quote_flags se count maggio di zero (funzione ridondante,
+sotto e' ok credo)
+*/
 int	check_and_free_memory(char **args_array, bool *args_quote_flags, int count)
 {
 	if (!args_array || (count > 0 && !args_quote_flags))
@@ -37,6 +48,26 @@ int	check_and_free_memory(char **args_array, bool *args_quote_flags, int count)
 	return (1);
 }
 
+// int	check_and_free_memory(char **args_array, bool *args_quote_flags)
+// {
+// 	if (!args_array || !args_quote_flags)
+// 	{
+// 		free(args_array);
+// 		free(args_quote_flags);
+// 		return (0);
+// 	}
+// 	return (1);
+// }
+
+/*
+Popola args_array e args_quote_flags -> l'array di argomenti e
+l'array di flag bool per le virgolette
+popola l'array** di argomenti a partire dal campo arg dell lista di comandi
+args_list
+imposta true o false per ogni argomento in base all pres o meno di
+quotes, se c'e un errore libera cio che era stato allocato
+e restituisce false altrimenti true
+*/
 bool	populate_args_arrays(t_list_args *args_list,
 				char **args_array, bool *args_quote_flags)
 {
@@ -64,6 +95,19 @@ bool	populate_args_arrays(t_list_args *args_list,
 	return (true);
 }
 
+/*
+converte lista di argomenti args_list in array
+alloca memoria per array di stringhe ** args_array
+e per bool per le quotes * arg_quote_flags
+-> controllo errori e liberazioni
+-> popola gli array
+-> assegna a args_quote_flags_ptr un bool per indicare se
+ci sono virgolette, che siano '' o ""
+ritorna l'array di stringhe args_array -->array di argomenti
+[incluso il primo]->[es. (1)'echo' (2)'-n' (3)'ciao'],
+inoltre ogni argomento ha un array di bool flag associato
+'[bool], [bool], [bool]' che indica se ha una qualche virgoletta
+*/
 char	**convert_arglist_for_exc(t_command *command,
 				bool **args_quote_flags_ptr)
 {

@@ -1,17 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser2_args_and_redir.c                           :+:      :+:    :+:   */
+/*   parser_args_and_redir.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/06 22:46:45 by girindi          #+#    #+#             */
-/*   Updated: 2024/11/05 16:27:25 by negambar         ###   ########.fr       */
+/*   Created: 2024/11/25 18:34:30 by tschetti          #+#    #+#             */
+/*   Updated: 2024/11/26 12:47:42 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../miniheader.h"
 
+/*
+aggiunge argomento alla lista di argomenti
+t_list_args
+-> alloca una struttura per il nuovo argomento
+imposta il valore dell'argomento e lo stato bool delle quotes
+-> crea la lista, collega i nodi
+*/
 int	add_argument(t_command *command, char *arg_value, bool single_quote,
 				bool double_quote)
 {
@@ -42,6 +49,12 @@ int	add_argument(t_command *command, char *arg_value, bool single_quote,
 	return (1);
 }
 
+/*
+gestisce token word, duplica argomento,
+se il token ha le double quotes, se ci sono var, le espande
+->aggiunge argomento alla lista degli arg t_list_args -> campo arg,
+va al token successivo
+*/
 int	handle_token_word(t_parser_state *state, t_command *command,
 		t_var_expand *v_exp, t_shell_state *shell_state)
 {
@@ -67,6 +80,10 @@ int	handle_token_word(t_parser_state *state, t_command *command,
 	return (1);
 }
 
+/*
+gestisce redirezioni,
+ritorna 0 se parse_redirection fallisce 1 altrimenti
+*/
 int	handle_redirection_tokens(t_parser_state *state, t_command *command)
 {
 	if (!parse_redirection(state, command))
@@ -74,6 +91,9 @@ int	handle_redirection_tokens(t_parser_state *state, t_command *command)
 	return (1);
 }
 
+/*
+gestisce token inaspettati/errori
+*/
 int	handle_unexpected_token(t_parser_state *state)
 {
 	state->flg_error = true;
@@ -81,6 +101,14 @@ int	handle_unexpected_token(t_parser_state *state)
 	return (0);
 }
 
+/*
+processa argomenti e redir per ogni comando
+->scorre token finche ci sono o finche trova una pipe
+->se il corrente e' un word, lo gestisce, ritorna 0
+se e' un dollar, gestisce, ritorna 0
+se e' una redir, anche, altrimenti gestisce token errore
+altrimenti ritorna 1 per liberare risorse allocate
+*/
 int	parse_arguments_and_redirection(t_parser_state *state, t_command *command,
 					t_shell_state *shell_state)
 {

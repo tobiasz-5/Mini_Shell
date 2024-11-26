@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor12_read_and_expand_utils.c                 :+:      :+:    :+:   */
+/*   exec_read_line_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/16 01:46:45 by girindi          #+#    #+#             */
-/*   Updated: 2024/11/05 16:10:38 by negambar         ###   ########.fr       */
+/*   Created: 2024/11/26 19:24:02 by tschetti          #+#    #+#             */
+/*   Updated: 2024/11/26 19:29:10 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 
 #define MAX_LINE_LENGTH 4096
 
+/*
+legge un char alla volta da stdin usando read,
+lo memorizza in buffer, restituisce numero di byte letti
+1 se ok, 0 se fine file, -1 se errore
+->se non e' causato da un segnale(eintr) ma appunto da read chiama perror
+*/
 ssize_t	read_single_char(char *buffer)
 {
 	ssize_t	bytes_read;

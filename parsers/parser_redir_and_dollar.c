@@ -1,17 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser4_redir_and_dollar.c                         :+:      :+:    :+:   */
+/*   parser_redir_and_dollar.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/06 22:46:49 by girindi          #+#    #+#             */
-/*   Updated: 2024/11/05 16:17:16 by negambar         ###   ########.fr       */
+/*   Created: 2024/11/25 18:34:21 by tschetti          #+#    #+#             */
+/*   Updated: 2024/11/26 09:41:36 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../miniheader.h"
 
+/*
+gestisce `$` e le var
+crea una nuova struct-> env_var
+->va oltre $, trova la variabile e la assegna a env_var,
+se esiste inizializza il campo value della nuova struttura env_var
+altrimenti lo imposta come stringa vuota
+--> aggiunge var_value come argomento al comando,
+imposta la flag booleana per indicare che c'era il dollar e
+passa al token successivo
+altrimenti se dopo $ non c'e un token_variable aggiunge
+semplicemente $ come argomento
+*/
 int	handle_dollar_and_variable(t_parser_state *state,
 				t_command *command, t_shell_state *shell_state)
 {
@@ -41,6 +53,11 @@ int	handle_dollar_and_variable(t_parser_state *state,
 	return (1);
 }
 
+/*
+aggiunge una lista di redir al comando,
+se non c'e niente in testa, redirection e' la prima redir altrimenti le 
+aggiunge via via
+*/
 int	add_redirection_to_command(t_redirection *redirection, t_command *command)
 {
 	t_redirection	*last;
@@ -54,9 +71,16 @@ int	add_redirection_to_command(t_redirection *redirection, t_command *command)
 			last = last->next;
 		last->next = redirection;
 	}
+	redirection->next = NULL;
 	return (1);
 }
 
+/*
+crea effettivamente la struttura per la redir,
+assegna il tipo del token come tipo di redir
+dopo aver creato la redir va oltre di un token
+ritorna la struttura
+*/
 t_redirection	*create_redirection(t_parser_state *state)
 {
 	t_redirection	*redirection;
@@ -70,6 +94,11 @@ t_redirection	*create_redirection(t_parser_state *state)
 	return (redirection);
 }
 
+/*
+processa nome file associato alla redir
+copia nome token come filename, assegna flag bool virgolette,
+passa al token successivo
+*/
 int	parse_redirection_filename(t_parser_state *state,
 			t_redirection *redirection)
 {
@@ -87,6 +116,11 @@ int	parse_redirection_filename(t_parser_state *state,
 		return (0);
 }
 
+/*
+analizza redirezioni:
+crea una struttura per la redir, chiama parse_redirection_filename,
+aggiunge la redir al comando, restituisce 1 ok 0 fail
+*/
 int	parse_redirection(t_parser_state *state, t_command *command)
 {
 	t_redirection	*redirection;

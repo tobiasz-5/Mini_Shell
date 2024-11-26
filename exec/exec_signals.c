@@ -1,17 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec2_signals.c                                    :+:      :+:    :+:   */
+/*   exec_signals.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: girindi <girindi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/16 23:42:51 by girindi          #+#    #+#             */
-/*   Updated: 2024/11/05 16:59:29 by girindi          ###   ########.fr       */
+/*   Created: 2024/11/26 18:05:20 by tschetti          #+#    #+#             */
+/*   Updated: 2024/11/26 18:05:22 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../miniheader.h"
 
+/*
+imposta i tre segnali al loro
+comportamento di default
+*/
 void	handle_signals_in_child(void)
 {
 	signal(SIGINT, SIG_DFL);
@@ -19,6 +23,12 @@ void	handle_signals_in_child(void)
 	signal(SIGPIPE, SIG_DFL);
 }
 
+/*
+ripristina il gestore dei segnali per sigint e sigquit
+chiamano handle_sigint e handle_sigquit rispettivamente
+resettano la maschera dei segnali, 0->nessuna opzione,
+sigaction applica effetivamente il gestore
+*/
 void	restore_signals_after_command(void)
 {
 	struct sigaction	sa_int;
@@ -34,17 +44,35 @@ void	restore_signals_after_command(void)
 	sigaction(SIGQUIT, &sa_quit, NULL);
 }
 
+/*
+ignora sigint e sigquit nel padre
+*/
 void	handle_signals_in_parent(void)
 {
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 }
 
+/*
+gestisce sigint durante heredoc
+la var globale assume valore del segnale
+*/
 void	handle_sigint_heredoc(int sig)
 {
 	g_received_signal = sig;
 }
 
+/*
+gestisce la fork
+nel figlio, pid=0
+-imposta segnali al comportamento di default
+-esegue il comando
+nel padre, pid>0
+-ignora i segnali
+-attende fine del figlio
+-ripristina originale gestione dei segnali
+-se fork fallisce(pid<0), perror e exit_staut=1
+*/
 void	handle_fork(t_command *all_cmds, t_fork_info *finfo,
 			t_shell_state *shell_state)
 {

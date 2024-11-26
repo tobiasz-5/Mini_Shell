@@ -3,16 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   exec_process_heredoc.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: girindi <girindi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 16:03:08 by girindi           #+#    #+#             */
-/*   Updated: 2024/11/05 17:12:19 by girindi          ###   ########.fr       */
+/*   Updated: 2024/11/26 19:05:34 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../miniheader.h"
 #define MAX_LINE_LENGTH 4096
 
+/*
+gestisce loop per heredoc
+mostra un prompt e legge la linea d'input
+->booleano per uscire o sigint ricevuto
+anche delimiter
+->espande se necessario e scrive nel file
+associato
+*/
 void	heredoc_input_loop(const char	*delimiter, int fd,
 			bool is_quoted, t_shell_state *shell_state)
 {
@@ -36,6 +44,11 @@ void	heredoc_input_loop(const char	*delimiter, int fd,
 	}
 }
 
+/*
+elabora tutti gli heredoc associati ai comandi
+-chiama process_command_heredocs per elaborare
+gli heredoc di ogni comando, se fallisce ritorna 1
+*/
 int	process_all_heredocs(t_command *command_list, t_shell_state *shell_state)
 {
 	t_command		*current_cmd;
@@ -50,6 +63,15 @@ int	process_all_heredocs(t_command *command_list, t_shell_state *shell_state)
 	return (0);
 }
 
+/*
+elabora heredocs per un comando
+-scorre la lista delle redirezioni del comando
+per ogni tipo heredoc che trova
+-chiama handle_heredoc, che crea file temporaneo,
+legge l input e se necessario lo espande
+salva il nome del file nel campo heredoc_filename
+della struttura redirection
+*/
 int	process_command_heredocs(t_command *current_cmd, t_shell_state *shell_state)
 {
 	t_redirection	*redirection;
@@ -74,6 +96,11 @@ int	process_command_heredocs(t_command *current_cmd, t_shell_state *shell_state)
 	return (0);
 }
 
+/*
+gestisce un singolo heredoc
+-crea un file temporaneo,
+-legge ed espande contenuto dell heredoc
+*/
 void	handle_heredoc(t_redirection *redirection,
 			char **heredoc_filename, t_shell_state *shell_state)
 {
@@ -87,6 +114,14 @@ void	handle_heredoc(t_redirection *redirection,
 	close(fd);
 }
 
+/*
+legge ed espande contenuto heredoc
+configura gestore segnali
+-sigint per interrompere mod heredoc
+-sigquit ignorato
+chiama heredoc_input_loop per leggere le linee di input
+ripristina i gestori dei segnali originali alla fine del loop
+*/
 void	read_and_expand_heredoc(const char *delimiter, int fd,
 				bool is_quoted, t_shell_state *shell_state)
 {

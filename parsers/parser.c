@@ -3,15 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/06 22:46:41 by girindi          #+#    #+#             */
-/*   Updated: 2024/11/05 16:17:16 by negambar         ###   ########.fr       */
+/*   Created: 2024/11/25 18:33:07 by tschetti          #+#    #+#             */
+/*   Updated: 2024/11/26 08:42:25 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../miniheader.h"
 
+/*assegna "nome" del comando
+se il token e' un word il nome e' preso  dal token stesso
+altrimenti valore di default, nome comando per cose come '<<eof'
+*/
 bool	set_command_name(t_parser_state *state, t_command *command)
 {
 	if (state->current_token->type == TOKEN_WORD)
@@ -36,6 +40,13 @@ bool	set_command_name(t_parser_state *state, t_command *command)
 	return (true);
 }
 
+/*
+processa un comando,
+se e' un word o una redirezione-> set_command_name
+-imposta il nome, aggiunge argomento
+-analizza argomenti e redirezioni
+restituisce comando completo
+*/
 t_command	*parse_command(t_parser_state *state,
 			t_shell_state *shell_state)
 {
@@ -61,6 +72,11 @@ t_command	*parse_command(t_parser_state *state,
 	return (command);
 }
 
+/*
+analizza tokens e costruisce command list
+se non ci sono errori via via costruisce la lista,
+se c'e una pipe passa al successivo
+*/
 t_command	*parse_tokens(t_token_node *tokens, t_shell_state *shell_state)
 {
 	t_parser_state	state;
