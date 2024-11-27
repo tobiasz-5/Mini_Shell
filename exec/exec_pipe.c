@@ -1,17 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor3_pipe.c                                   :+:      :+:    :+:   */
+/*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/06 22:45:43 by girindi          #+#    #+#             */
-/*   Updated: 2024/11/05 16:10:38 by negambar         ###   ########.fr       */
+/*   Created: 2024/11/27 10:07:13 by tschetti          #+#    #+#             */
+/*   Updated: 2024/11/27 12:49:09 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../miniheader.h"
 
+/*
+chiude file descriptor della pipe precedente e attende i figli
+-se fd della pipe precedente e' aperto (valore diverso da -1)
+->chiude fd della pipe precedente (basta prev_fd[0]) e attende figli, inoltre
+ripristina gestore dei segnali custom
+*/
 void	finalize_pipeline(int prev_pipe_fd[2], t_shell_state *shell_state)
 {
 	if (prev_pipe_fd[0] != -1)
@@ -21,6 +27,12 @@ void	finalize_pipeline(int prev_pipe_fd[2], t_shell_state *shell_state)
 	signal(SIGQUIT, handle_sigquit);
 }
 
+/*
+gestisce figlio nella pipeline
+-ripristina comportamento di default per sigint e sigquit
+-chiama setup_child_process per gestire
+effettivamente figlio nella pipeline e eseguire il cmd
+*/
 void	handle_child_process(t_command *all_cmds, t_pipe_cmd *pcmd,
 			t_shell_state *shell_state)
 {
@@ -29,6 +41,13 @@ void	handle_child_process(t_command *all_cmds, t_pipe_cmd *pcmd,
 	setup_child_prcs(all_cmds, pcmd, shell_state);
 }
 
+/*
+gestisce padre durante la pipeline
+-ignora sigint e sigquit
+-pulisce fd della pipeline->parent_cleanup
+chiude gli fd della pipe precedente se necessario
+reimposta i prev_pipe_fd per la prossima iterazione
+*/
 void	handle_parent_process(pid_t pid, int prev_pipe_fd[2], int pipe_fd[2])
 {
 	(void)pid;
@@ -37,6 +56,12 @@ void	handle_parent_process(pid_t pid, int prev_pipe_fd[2], int pipe_fd[2])
 	parent_cleanup(prev_pipe_fd, pipe_fd);
 }
 
+/*
+ciclo per pipeline
+crea le pipe e e forka ogni comando via via
+gestisce figlio(esecuzione comando) e padre(chiusura
+pipe e attesa figli) per ogni cmd
+*/
 void	execute_pipeline_loop(t_command *current_cmd, int prev_pipe_fd[2],
 				t_command *command_list, t_shell_state *shell_state)
 {
@@ -61,6 +86,12 @@ void	execute_pipeline_loop(t_command *current_cmd, int prev_pipe_fd[2],
 	}
 }
 
+/*
+esegue pipepline, chiamante execute_commands
+-inizializza stato della pipeline
+-esegue ogni comando nella pipeline via via
+-finalizza->chiude pipe, attende figli
+*/
 void	execute_pipeline(t_command *command_list, t_shell_state *shell_state)
 {
 	t_command	*current_cmd;

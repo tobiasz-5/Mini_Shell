@@ -1,17 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor8_redir_child_utils.c                      :+:      :+:    :+:   */
+/*   exec_handle_redir.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/06 22:45:53 by girindi          #+#    #+#             */
-/*   Updated: 2024/11/05 16:10:38 by negambar         ###   ########.fr       */
+/*   Created: 2024/11/27 10:07:43 by tschetti          #+#    #+#             */
+/*   Updated: 2024/11/27 18:23:52 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../miniheader.h"
 
+/*
+queste funzioni non servono piu, tenute per sicurezza
+*/
 int	open_file(const char *filename, int flags, mode_t mode)
 {
 	int	fd;

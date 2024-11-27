@@ -3,16 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tmp_heredoc.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: girindi <girindi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/05 16:19:56 by girindi           #+#    #+#             */
-/*   Updated: 2024/11/05 16:42:46 by girindi          ###   ########.fr       */
+/*   Created: 2024/11/27 10:06:23 by tschetti          #+#    #+#             */
+/*   Updated: 2024/11/27 10:54:59 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../miniheader.h"
 #define MAX_ATTEMPTS 100
 
+/*
+crea file temp unico per heredeco
+duplica nome generato e lo assegna a 'heredoc_filename'
+se qualcosa fallisce, chiude l'fd vars.fd,
+rimuove file temporaneo con unlink, ritorna errore
+altrimenti ritorna l'fd del file creato
+*/
 int	create_temp_heredoc_file(char **heredoc_filename)
 {
 	t_filename_vars	vars;
@@ -34,6 +41,11 @@ int	create_temp_heredoc_file(char **heredoc_filename)
 	return (vars.fd);
 }
 
+/*
+converte intero in stringa
+se num e' zero assegna zero
+altrimenti se negativo imposta flag e lo rende positivo
+*/
 void	init_int_to_str_vars(t_int_to_str_vars *vars, int num)
 {
 	vars->i = 0;
@@ -51,6 +63,13 @@ void	init_int_to_str_vars(t_int_to_str_vars *vars, int num)
 	}
 }
 
+/*
+converte intero in stringa
+se num e' zero -> stringa e' zero + '\0'
+altrimenti cicla riempiendo stringa dall'inizio
+con l ultimo 'char' -> -123 -> 321-
+->infine lo riordina -123
+*/
 void	int_to_str(int num, char *str)
 {
 	t_int_to_str_vars	vars;
@@ -75,6 +94,14 @@ void	int_to_str(int num, char *str)
 	str[vars.j] = '\0';
 }
 
+/*
+tenta fino a max_attempts volte di creare nome unico per il file
+-usa int_to_str per aggiungere un identificatore unico al nome base
+/tmp/heredoc_
+-crea file con open
+-se fd != -1 allora open file ha avuto successo, quindi esce dal
+while, ritorna ok al chiamante
+*/
 int	generate_unique_filename(t_filename_vars *vars)
 {
 	vars->unique_id = 0;
@@ -97,6 +124,10 @@ int	generate_unique_filename(t_filename_vars *vars)
 	return (-1);
 }
 
+/*
+elimina file temporaneo dell heredoc
+e libera la memoria allocate per heredoc_filename
+*/
 void	clean_filename(t_redirection *redirection)
 {
 	if (redirection->heredoc_filename)

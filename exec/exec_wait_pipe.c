@@ -1,17 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor3_wait.c                                   :+:      :+:    :+:   */
+/*   exec_wait_pipe.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/16 20:55:30 by girindi          #+#    #+#             */
-/*   Updated: 2024/11/05 16:10:38 by negambar         ###   ########.fr       */
+/*   Created: 2024/11/27 10:06:14 by tschetti          #+#    #+#             */
+/*   Updated: 2024/11/27 13:51:27 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../miniheader.h"
 
+/*
+crea pipe se c'e un comando successivo[un altra pipe]
+-se c'e chiama pipe per creare gli fd, + gestisce errore
+-se non c'e inizializza gli fd a -1 per indicare
+che non sono stati creati
+*/
 void	create_pipe_if_needed(t_command *current_cmd, int pipe_fd[2])
 {
 	if (current_cmd->next)
@@ -29,6 +35,14 @@ void	create_pipe_if_needed(t_command *current_cmd, int pipe_fd[2])
 	}
 }
 
+/*
+attende fine di tutti i figli
+-usa wait per conoscere stato di uscita di ogni figlio
+se wait>0 -> ci sono ancora figli da attedere
+-aggiorna last_exit_status con codice uscita ultimo figlio
+-wifexited -> uscito normalmente con exit
+-wifsignaled -> uscito con segnale
+*/
 void	wait_for_all_children(t_shell_state *shell_state)
 {
 	int	status;
@@ -50,6 +64,11 @@ void	wait_for_all_children(t_shell_state *shell_state)
 	}
 }
 
+/*
+inizializza fd pipe precedente e il puntatore
+al cmd corrente
+-e' il primo della pipeline quindi non ci sono prev fds
+*/
 void	init_pipeline(t_command **current_cmd,
 			int prev_pipe_fd[2], t_command *command_list)
 {

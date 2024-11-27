@@ -1,17 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor3_setup_child.c                            :+:      :+:    :+:   */
+/*   exec_pipe2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/16 19:36:14 by girindi          #+#    #+#             */
-/*   Updated: 2024/11/05 16:10:38 by negambar         ###   ########.fr       */
+/*   Created: 2024/11/27 10:06:59 by tschetti          #+#    #+#             */
+/*   Updated: 2024/11/27 13:17:40 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../miniheader.h"
 
+/*
+inizializza con valori di default
+-1 indica non utilizzati
+*/
 void	init_fds_bye_norminette(t_io_fds *fds)
 {
 	fds->infile_fd = -1;
@@ -21,6 +25,10 @@ void	init_fds_bye_norminette(t_io_fds *fds)
 	fds->stdout_backup = -1;
 }
 
+/*
+chiude fds delle pipe precedenti e correnti,
+se sono stati utilizzati [-1]
+*/
 void	close_pipe_fds(int prev_pipe_fd[2], int pipe_fd[2])
 {
 	if (prev_pipe_fd[0] != -1)
@@ -35,6 +43,20 @@ void	close_pipe_fds(int prev_pipe_fd[2], int pipe_fd[2])
 	}
 }
 
+/*
+configura processo figlio per pipeline
+-se l fd[0] e' stata aperto/utilizzato [val diverso da -1]
+allora duplica file descriptor della pipe precedente
+(lettura) su stdin-> cosi comando puo leggere
+dall output del cmd precedente
+-se l fd[1] e' stato aperto/utilizzato 
+duplica file descriptor della pipe corrente (scrittura)
+su stdout-> cosi comando puo inviare/scrivere il suo output
+nell fd per ill cmd successivo
+-poi chiude gli fds se necessario
+-esegue il comando
+-libera risorse ed esce dal figlio
+*/
 void	setup_child_prcs(t_command *all_cmds, t_pipe_cmd *pcmd,
 			t_shell_state *shell_state)
 {

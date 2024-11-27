@@ -6,12 +6,17 @@
 /*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:19:12 by tschetti          #+#    #+#             */
-/*   Updated: 2024/11/26 14:19:15 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/11/27 12:13:21 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../miniheader.h"
 
+/*verifica se comando e' un path assoluto o relativo
+/assouluto .relativo
+controlla con access se e'esguibile, se lo e' ritorna
+una copia del cmd altrimenti ritorna null
+*/
 char	*check_absolute_or_relative(const char *cmd_name)
 {
 	if (cmd_name[0] == '/' || cmd_name[0] == '.')
@@ -23,6 +28,13 @@ char	*check_absolute_or_relative(const char *cmd_name)
 	return (NULL);
 }
 
+/*
+ottiene percorsi dai quali cercare i cmd
+cerca PATH in env_list, se la trova la divide 
+con ft_split in percorsi separati da ':'
+ritorna un array di stringhe** con i percorsi
+oppure null se fallisce
+*/
 char	**get_path_directories(t_shell_state *shell_state)
 {
 	char		*path_env;
@@ -42,6 +54,12 @@ char	**get_path_directories(t_shell_state *shell_state)
 	return (paths);
 }
 
+/*
+costruisce percorso completo di un cmd
+alloca spazio per path+cmd
+concatena path a cmd inserendo '/' tra i due
+ritorna il percorso completo del cmd
+*/
 char	*build_full_path(const char *path, const char *cmd_name)
 {
 	size_t	path_len;
@@ -59,6 +77,16 @@ char	*build_full_path(const char *path, const char *cmd_name)
 	return (full_path);
 }
 
+/*
+cerca comando nei vari percorsi specificati
+-per ogni percorso costruisce path completo con 
+build_full_path
+-stat ottiene info sul file
+-se e' eseguibile e regolare [s_isreg]->non una dir
+ritorna il patch completo
+-altrimenti libera e continua la ricerca, se non 
+trova niente ritorna null
+*/
 char	*search_in_paths(const char *cmd_name, char **paths)
 {
 	struct stat	path_stat;
@@ -80,6 +108,14 @@ char	*search_in_paths(const char *cmd_name, char **paths)
 	return (NULL);
 }
 
+/*
+ottiene percorso comando attraverso le f sopra
+se non e' assoluto o relativo ma semplice tipo ls
+cerca nei percorsi della var PATH, **paths get_path_directories,
+attraverso la f search_in_paths, poi libera paths
+e restituisce percorso completo command_path o null
+se non trova niente
+*/
 char	*get_command_path(const char *cmd_name, t_shell_state *shell_state)
 {
 	char	*command_path;

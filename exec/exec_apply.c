@@ -1,17 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor6_redir_builtin_utils.c                    :+:      :+:    :+:   */
+/*   exec_apply.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/06 22:45:49 by girindi          #+#    #+#             */
-/*   Updated: 2024/11/05 16:10:38 by negambar         ###   ########.fr       */
+/*   Created: 2024/11/27 18:35:07 by tschetti          #+#    #+#             */
+/*   Updated: 2024/11/27 18:53:48 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../miniheader.h"
 
+/*
+gestisce redir heredoc
+-apre file temp creato per heredoc (onlyread-> 1 solo lato lett.)
+-se open da errore, perror, e ritorna -1
+-chiama dup2 per duplicare l'fd per l'heredoc su stdin
+-chiude fd per heredoc e cancella file tmp(unlink)
+*/
 int	apply_heredoc_file(t_redirection *redirection)
 {
 	int	fd;
@@ -33,6 +40,11 @@ int	apply_heredoc_file(t_redirection *redirection)
 	return (0);
 }
 
+/*
+applica redir in base al tipo
+altrimenti ritorna 0 a i chiamanti handle_builtin_redirections
+e process_redirection che in tal caso non fanno nulla
+*/
 int	apply_redirection(t_redirection *redirection, t_io_fds *fds,
 			t_shell_state *shell_state)
 {

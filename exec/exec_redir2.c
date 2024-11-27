@@ -1,17 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor7_utils.c                                  :+:      :+:    :+:   */
+/*   exec_redir2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/05 15:59:31 by negambar          #+#    #+#             */
-/*   Updated: 2024/11/05 16:10:38 by negambar         ###   ########.fr       */
+/*   Created: 2024/11/27 10:06:40 by tschetti          #+#    #+#             */
+/*   Updated: 2024/11/27 18:48:27 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../miniheader.h"
 
+/*
+Queste funzioni non servono piu, lasciate qui per ora,
+in exec_redirect.c le equivalenti giuste, fatte bene
+*/
 int	handle_input_redirection(t_redirection *redirection)
 {
 	int	fd;
