@@ -6,12 +6,15 @@
 /*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 10:50:01 by tschetti          #+#    #+#             */
-/*   Updated: 2024/11/28 10:50:03 by tschetti         ###   ########.fr       */
+/*   Updated: 2024/11/28 13:41:59 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../miniheader.h"
 
+/*
+da ascii a long
+*/
 static long	ft_atol(const char *s)
 {
 	long	res;
@@ -30,6 +33,11 @@ static long	ft_atol(const char *s)
 	return (res * sign);
 }
 
+/*
+gestisce errori per argomento di exit non valid
+-stamp msg custom
+-aggiorna exit_code con codice 2
+*/
 int	handle_exit_error(char **args_array, t_shell_state *shell_state)
 {
 	printf("Mini exit: %s num required\n", args_array[1]);
@@ -38,6 +46,13 @@ int	handle_exit_error(char **args_array, t_shell_state *shell_state)
 	return (2);
 }
 
+/*
+gestisce exit
+-controlla argomento di exit sia valido
+-controlla sia compreso tra int_min e int_max
+-se c'e piu di un arg, errore
+-ritorna con atoi codice di uscita attraverso modulo 256,
+*/
 int	validate_exit_code(char **args_array, t_shell_state *shell_state)
 {
 	int		i;
@@ -67,6 +82,15 @@ int	validate_exit_code(char **args_array, t_shell_state *shell_state)
 	return (ft_atoi(args_array[1]) % 256);
 }
 
+/*
+esegue exit
+-stampa sempre exit
+-se non ci sono arg per exit, esce con codice 0
+-altrimenti chiama validate_exit_code per gestire
+argomenti di exit, poi esce dalla shell impostando la flag
+a true, altrimenti se piu di un arg per exit
+[if (exit_code == -1)] ritorna al chiamante
+*/
 void	execute_exit(char **args_array, t_shell_state *shell_state)
 {
 	int	exit_code;
