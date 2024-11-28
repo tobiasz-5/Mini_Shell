@@ -3,15 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   builtin5.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/06 22:45:32 by girindi          #+#    #+#             */
-/*   Updated: 2024/11/05 16:10:38 by negambar         ###   ########.fr       */
+/*   Created: 2024/11/28 10:50:33 by tschetti          #+#    #+#             */
+/*   Updated: 2024/11/28 11:16:29 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../miniheader.h"
 
+/*
+stampa le variabili exportate
+nel formato richiesto da bash
+se il valore della var e' null e la flag exported_empty e' vera
+stampa solo il nome-> name=""
+altrimenti stampa nome e valore name="val"
+*/
 void	print_exported_vars(t_env_var *env_list)
 {
 	while (env_list)
@@ -24,6 +31,13 @@ void	print_exported_vars(t_env_var *env_list)
 	}
 }
 
+/*
+gestisce/esegue comando export
+se non ci sono argomenti per export-> stampa tutte le var nel formato richiesto
+da bash (declare -x) con print_exported_vars
+altrimenti cicla sugli argomenti e chiama handle_export_command per
+exportare/aggiornare le var
+*/
 void	execute_export(char **args_array, bool *args_quote_flags,
 				t_shell_state *shell_state)
 {
@@ -47,6 +61,12 @@ void	execute_export(char **args_array, bool *args_quote_flags,
 	}
 }
 
+/*
+esegue i built-in implementati
+confronta nome comando con stringhe dei builtin disponibili
+-se cmd e' unset e non ci sono arg scrive mssg di errore
+altrimenti cicla sugli arg di unset
+*/
 void	execute_builtin(t_command *command, char **args_array,
 			bool *args_quote_flags, t_shell_state *shell_state)
 {

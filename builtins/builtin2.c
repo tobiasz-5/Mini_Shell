@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   builtin2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/06 22:45:23 by girindi          #+#    #+#             */
-/*   Updated: 2024/11/05 16:10:38 by negambar         ###   ########.fr       */
+/*   Created: 2024/11/28 10:50:14 by tschetti          #+#    #+#             */
+/*   Updated: 2024/11/28 11:58:07 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../miniheader.h"
 
+/*
+esporta o aggiorna una var
+-se esite aggiorna il valore
+-altrimenti crea nuova var e la aggiunge
+all'inizio della lista
+*/
 void	export_env_var(t_env_var **env_list, const char *name,
 			const char *value)
 {
@@ -36,6 +42,11 @@ void	export_env_var(t_env_var **env_list, const char *name,
 	}
 }
 
+/*
+rimuove virgolette '' e "" da una var esportata
+-se valore di var inizia e finisco con virgolette
+le rimuove, poi aggiorna valore var
+*/
 void	process_export_value(char **var_value, bool double_quote,
 				bool single_quote)
 {
@@ -60,6 +71,14 @@ void	process_export_value(char **var_value, bool double_quote,
 	}
 }
 
+/*
+esporta variabile vuota
+-se la var gia esiste[exportata precedent.]
+cambia valore booleano per contrassegnarla come vuota, libera
+vecchio valoree assegna "" al valore di var
+-altrimenti se non esiste crea nuova var con value "" e la
+aggiunge a inizio lista
+*/
 void	export_env_var_empty(t_env_var **env_list, const char *name)
 {
 	t_env_var	*var;
@@ -88,6 +107,12 @@ void	export_env_var_empty(t_env_var **env_list, const char *name)
 	}
 }
 
+/*
+analizza input
+-se c'e un =, separa nome e val
+-se non c'e, copia il nome
+-controlla validita del nome ->is_valid_var_name
+*/
 int	parse_export_input(const char *input, char **var_name, char **var_value)
 {
 	char	*equal_sign;
@@ -113,6 +138,12 @@ int	parse_export_input(const char *input, char **var_name, char **var_value)
 	return (0);
 }
 
+/*
+accorpa le varie f di export
+-controlla validita nome
+-exporta var vuota
+-exporta/aggiorna var
+*/
 void	handle_export_command(t_env_var **env_list, const char *input,
 				bool double_quote, bool single_quote)
 {

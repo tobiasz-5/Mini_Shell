@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   builtin3.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: negambar <negambar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/06 22:45:25 by girindi          #+#    #+#             */
-/*   Updated: 2024/11/05 16:10:38 by negambar         ###   ########.fr       */
+/*   Created: 2024/11/28 10:50:20 by tschetti          #+#    #+#             */
+/*   Updated: 2024/11/28 13:10:34 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../miniheader.h"
 
+/*
+verifica se e' un nome di variabile valido
+-deve iniziare con lettere o _
+-poi puo contenere solo lettere, numeri o _
+*/
 bool	is_valid_var_name(const char *name)
 {
 	size_t	i;
@@ -30,6 +35,9 @@ bool	is_valid_var_name(const char *name)
 	return (true);
 }
 
+/*
+libera nome, valore e struttura
+*/
 void	free_env_var(t_env_var *env_var)
 {
 	if (env_var)
@@ -40,6 +48,16 @@ void	free_env_var(t_env_var *env_var)
 	}
 }
 
+/*
+unsetta/rimuove una var d'ambiente,
+cerca la var nella lista, se la trova la rimuove
+-imposta nodo precedente a null all inizio
+-**env_list doppio p per modificare direttamente nel chiamante
+-se esiste un nodo precedente-> prev->next = current->next
+collega il precedente al successivo, perche il corrente viene rimosso
+poco dopo
+altrimenti aggiorna testa lista *env_list = current->next
+*/
 void	unset_env_var(t_env_var **env_list, const char *name)
 {
 	t_env_var	*current;
@@ -65,6 +83,12 @@ void	unset_env_var(t_env_var **env_list, const char *name)
 	}
 }
 
+/*
+stampa le var di ambiente con env
+-verifica se puntatore value esiste e se
+valore puntato da value e' non vuoto
+->stampa le var che soddisfano l if
+*/
 void	print_env_vars(t_env_var *env_list)
 {
 	while (env_list)
@@ -75,6 +99,10 @@ void	print_env_vars(t_env_var *env_list)
 	}
 }
 
+/*
+esegue env
+chiama la f per stampare le var appropriate
+*/
 void	builtin_env(t_shell_state *shell_state)
 {
 	print_env_vars(shell_state->env_list);

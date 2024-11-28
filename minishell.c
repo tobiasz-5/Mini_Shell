@@ -5,14 +5,15 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/06 22:46:29 by girindi           #+#    #+#             */
-/*   Updated: 2024/11/26 18:13:02 by tschetti         ###   ########.fr       */
+/*   Created: 2024/11/28 10:52:58 by tschetti          #+#    #+#             */
+/*   Updated: 2024/11/28 10:54:10 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniheader.h"
 
 /*
+esegue i comandi
 elabora tutti gli heredoc. -> se fallisce, libera e termina
 se ci sono piu comandi->pipeline altrimenti->esegue il comando singolo
 */

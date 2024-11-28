@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tschetti <tschetti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/23 15:47:11 by tschetti          #+#    #+#             */
-/*   Updated: 2024/11/23 15:49:37 by tschetti         ###   ########.fr       */
+/*   Created: 2024/11/28 10:50:26 by tschetti          #+#    #+#             */
+/*   Updated: 2024/11/28 12:01:29 by tschetti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@ t_env_var	*find_env_var(t_env_var *env_list, const char *name)
 	return (NULL);
 }
 
+/*
+se nome cmd e' uno dei bltn disponibili ritorna 1
+altrimenti 0
+*/
 int	is_builtin(char *cmd_name)
 {
 	if (ft_strcmp(cmd_name, "cd") == 0
